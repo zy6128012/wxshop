@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wx.mapper.AdminObjMapper" >
+  <resultMap id="BaseResultMap" type="com.wx.dto.AdminObj" >
+    <id column="AdminID" property="adminid" jdbcType="INTEGER" />
+    <result column="LogonName" property="logonname" jdbcType="VARCHAR" />
+    <result column="TrueName" property="truename" jdbcType="VARCHAR" />
+    <result column="Password" property="password" jdbcType="VARCHAR" />
+    <result column="ManRole" property="manrole" jdbcType="INTEGER" />
+    <result column="CreateDate" property="createdate" jdbcType="INTEGER" />
+    <result column="Kind" property="kind" jdbcType="INTEGER" />
+    <result column="Memo" property="memo" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    AdminID, LogonName, TrueName, Password, ManRole, CreateDate, Kind, Memo
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from admin
+    where AdminID = #{adminid,jdbcType=INTEGER}
+  </select>
+  <select id="adminLogin" resultMap="BaseResultMap" parameterType="com.wx.datareq.AdminLoginReq" >
+    select *
+    from admin
+    <where>
+      <if test="logonName!=null">
+        AND logonName = #{logonName}
+      </if>
+      <if test="password!=null">
+        AND password= #{password}
+      </if>
+    </where>
+  </select>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.wx.datareq.AdminGetReq" >
+    select *
+    from admin
+    <where>
+      <if test="logonName!=null and logonName!=''">
+        AND LogonName = #{logonName}
+      </if>
+      <if test="adminID!=null and adminID!=''">
+        AND AdminID = #{adminID}
+      </if>
+      <if test="trueName!=null and trueName!=''">
+        AND TrueName LIKE  CONCAT('%','${trueName}','%')
+      </if>
+    </where>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from admin
+    where AdminID = #{adminid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.wx.dto.AdminObj" >
+    insert into admin (AdminID, LogonName, TrueName, 
+      Password, ManRole, CreateDate, 
+      Kind, Memo)
+    values (#{adminid,jdbcType=INTEGER}, #{logonname,jdbcType=VARCHAR}, #{truename,jdbcType=VARCHAR}, 
+      #{password,jdbcType=VARCHAR}, #{manrole,jdbcType=INTEGER}, #{createdate,jdbcType=INTEGER}, 
+      #{kind,jdbcType=INTEGER}, #{memo,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wx.dto.AdminObj" >
+    insert into admin
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="adminid != null" >
+        AdminID,
+      </if>
+      <if test="logonname != null" >
+        LogonName,
+      </if>
+      <if test="truename != null" >
+        TrueName,
+      </if>
+      <if test="password != null" >
+        Password,
+      </if>
+      <if test="manrole != null" >
+        ManRole,
+      </if>
+      <if test="createdate != null" >
+        CreateDate,
+      </if>
+      <if test="kind != null" >
+        Kind,
+      </if>
+      <if test="memo != null" >
+        Memo,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="adminid != null" >
+        #{adminid,jdbcType=INTEGER},
+      </if>
+      <if test="logonname != null" >
+        #{logonname,jdbcType=VARCHAR},
+      </if>
+      <if test="truename != null" >
+        #{truename,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="manrole != null" >
+        #{manrole,jdbcType=INTEGER},
+      </if>
+      <if test="createdate != null" >
+        #{createdate,jdbcType=INTEGER},
+      </if>
+      <if test="kind != null" >
+        #{kind,jdbcType=INTEGER},
+      </if>
+      <if test="memo != null" >
+        #{memo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wx.dto.AdminObj" >
+    update admin
+    <set >
+      <if test="logonname != null" >
+        LogonName = #{logonname,jdbcType=VARCHAR},
+      </if>
+      <if test="truename != null" >
+        TrueName = #{truename,jdbcType=VARCHAR},
+      </if>
+
+      <if test="manrole != null" >
+        ManRole = #{manrole,jdbcType=INTEGER},
+      </if>
+      <if test="createdate != null" >
+        CreateDate = #{createdate,jdbcType=INTEGER},
+      </if>
+      <if test="kind != null" >
+        Kind = #{kind,jdbcType=INTEGER},
+      </if>
+      <if test="memo != null" >
+        Memo = #{memo,jdbcType=VARCHAR},
+      </if>
+    </set>
+        where AdminID = #{adminid,jdbcType=INTEGER}
+  </update>
+  <update id="updatePassword" parameterType="com.wx.datareq.SetPassword" >
+    update admin
+    <set>
+      Password = #{password,jdbcType=VARCHAR}
+    </set>
+        where AdminID=#{adminID,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wx.dto.AdminObj" >
+    update admin
+    set LogonName = #{logonname,jdbcType=VARCHAR},
+      TrueName = #{truename,jdbcType=VARCHAR},
+      ManRole = #{manrole,jdbcType=INTEGER},
+      Kind = #{kind,jdbcType=INTEGER},
+      Memo = #{memo,jdbcType=VARCHAR}
+    where AdminID = #{adminid,jdbcType=INTEGER}
+  </update>
+</mapper>

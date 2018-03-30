@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wx.mapper.GoodsObjMapper" >
+  <resultMap id="BaseResultMap" type="com.wx.dto.GoodsObj" >
+    <id column="GoodsID" property="goodsid" jdbcType="INTEGER" />
+    <result column="GoodsName" property="goodsname" jdbcType="VARCHAR" />
+    <result column="BuyType" property="buytype" jdbcType="INTEGER" />
+    <result column="SuppCompany" property="suppcompany" jdbcType="VARCHAR" />
+    <result column="Model" property="model" jdbcType="VARCHAR" />
+    <result column="BuyPrice" property="buyprice" jdbcType="INTEGER" />
+    <result column="PaperSize" property="papersize" jdbcType="INTEGER" />
+    <result column="PaperColor" property="papercolor" jdbcType="INTEGER" />
+    <result column="UseType" property="usetype" jdbcType="INTEGER" />
+    <result column="GoodsProp" property="goodsprop" jdbcType="INTEGER" />
+    <result column="GoodsStatue" property="goodsstatue" jdbcType="INTEGER" />
+    <result column="GoodsStock" property="goodsstock" jdbcType="INTEGER" />
+    <result column="BuyDate" property="buydate" jdbcType="INTEGER" />
+    <result column="GoodsImgUrl" property="goodsimgurl" jdbcType="VARCHAR" />
+    <result column="Memo" property="memo" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.wx.dto.GoodsObj" extends="BaseResultMap" >
+    <result column="GoodIntro" property="goodintro" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    GoodsID, GoodsName, BuyType, SuppCompany, Model,BuyPrice, PaperSize, PaperColor, UseType,
+    GoodsProp, GoodsStatue, GoodsStock, BuyDate, GoodsImgUrl, Memo
+  </sql>
+  <sql id="Blob_Column_List" >
+    GoodIntro
+  </sql>
+  <select id="select" resultMap="ResultMapWithBLOBs" parameterType="com.wx.datareq.GoodsReq" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from goods
+
+    <where>
+      <if test="goodsID!=null and goodsID != 0">
+        AND GoodsID=${goodsID}
+      </if>
+      <if test="goodsName!=null and goodsName != ''">
+        AND GoodsName LIKE  CONCAT('%','${goodsName}','%')
+      </if>
+      <if test="suppcompany!=null and suppcompany != ''">
+        AND SuppCompany LIKE  CONCAT('%','${suppcompany}','%')
+      </if>
+      <if test="buyType!=null">
+        AND<![CDATA[   (BuyType & #{buyType})>0]]>
+      </if>
+      <if test="minbuyprice!=null">
+        AND  <![CDATA[  #{minbuyprice}<= BuyPrice]]>
+      </if>
+      <if test="maxbuyprice!=null">
+        AND <![CDATA[  #{maxbuyprice}>=BuyPrice]]>
+      </if>
+      <if test="beginBuyDate!=null and beginBuyDate!=0">
+        AND  <![CDATA[#{beginBuyDate}<=BuyDate]]>
+      </if>
+      <if test="endBuyDate!=null and endBuyDate!=0">
+        AND <![CDATA[ BuyDate<= #{endBuyDate}]]>
+      </if>
+      <if test="paperSize!=null">
+        AND<![CDATA[  (PaperSize&(#{paperSize}))>0]]>
+      </if>
+      <if test="paperColor!=null">
+        AND <![CDATA[  (PaperColor&(#{paperColor}))>0]]>
+      </if>
+      <if test="useType!=null">
+        AND <![CDATA[  (UseType&(#{useType}))>0]]>
+      </if>
+      <if test="goodsProp!=null and goodsProp!=0">
+        AND<![CDATA[   (GoodsProp&(#{goodsProp}))=#{goodsProp}]]>
+      </if>
+      <if test="goodsStatue!=null">
+        AND <![CDATA[  (GoodsStatue&(#{goodsStatue}))>0]]>
+      </if>
+    </where>
+
+
+
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from goods
+    where GoodsID = #{goodsid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.wx.dto.GoodsObj" >
+    insert into goods (GoodsID, GoodsName, BuyType, 
+      SuppCompany, Model,BuyPrice, PaperSize,
+      PaperColor, UseType, GoodsProp, 
+      GoodsStatue, GoodsStock, BuyDate, 
+      GoodsImgUrl, Memo, GoodIntro,Model
+      )
+    values (#{goodsid,jdbcType=INTEGER}, #{goodsname,jdbcType=VARCHAR}, #{buytype,jdbcType=INTEGER}, 
+      #{suppcompany,jdbcType=VARCHAR},#{model,jdbcType=VARCHAR}, #{buyprice,jdbcType=INTEGER}, #{papersize,jdbcType=INTEGER},
+      #{papercolor,jdbcType=INTEGER}, #{usetype,jdbcType=INTEGER}, #{goodsprop,jdbcType=INTEGER}, 
+      #{goodsstatue,jdbcType=INTEGER}, #{goodsstock,jdbcType=INTEGER}, #{buydate,jdbcType=INTEGER}, 
+      #{goodsimgurl,jdbcType=VARCHAR}, #{memo,jdbcType=VARCHAR}, #{goodintro,jdbcType=LONGVARCHAR}
+      )
+    <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="goodsid">
+      select LAST_INSERT_ID() as value
+    </selectKey>
+  </insert>
+  <insert id="insertSelective" parameterType="com.wx.dto.GoodsObj" >
+    insert into goods
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="goodsid != null" >
+        GoodsID,
+      </if>
+      <if test="goodsname != null" >
+        GoodsName,
+      </if>
+      <if test="buytype != null" >
+        BuyType,
+      </if>
+      <if test="suppcompany != null" >
+        SuppCompany,
+      </if>
+      <if test="model != null" >
+        Model,
+      </if>
+      <if test="buyprice != null" >
+        BuyPrice,
+      </if>
+      <if test="papersize != null" >
+        PaperSize,
+      </if>
+      <if test="papercolor != null" >
+        PaperColor,
+      </if>
+      <if test="usetype != null" >
+        UseType,
+      </if>
+      <if test="goodsprop != null" >
+        GoodsProp,
+      </if>
+      <if test="goodsstatue != null" >
+        GoodsStatue,
+      </if>
+      <if test="goodsstock != null" >
+        GoodsStock,
+      </if>
+      <if test="buydate != null" >
+        BuyDate,
+      </if>
+      <if test="goodsimgurl != null" >
+        GoodsImgUrl,
+      </if>
+      <if test="memo != null" >
+        Memo,
+      </if>
+      <if test="goodintro != null" >
+        GoodIntro,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="goodsid != null" >
+        #{goodsid,jdbcType=INTEGER},
+      </if>
+      <if test="goodsname != null" >
+        #{goodsname,jdbcType=VARCHAR},
+      </if>
+      <if test="buytype != null" >
+        #{buytype,jdbcType=INTEGER},
+      </if>
+      <if test="suppcompany != null" >
+        #{suppcompany,jdbcType=INTEGER},
+      </if>
+      <if test="buyprice != null" >
+        #{buyprice,jdbcType=INTEGER},
+      </if>
+      <if test="papersize != null" >
+        #{papersize,jdbcType=INTEGER},
+      </if>
+      <if test="papercolor != null" >
+        #{papercolor,jdbcType=INTEGER},
+      </if>
+      <if test="usetype != null" >
+        #{usetype,jdbcType=INTEGER},
+      </if>
+      <if test="goodsprop != null" >
+        #{goodsprop,jdbcType=INTEGER},
+      </if>
+      <if test="goodsstatue != null" >
+        #{goodsstatue,jdbcType=INTEGER},
+      </if>
+      <if test="goodsstock != null" >
+        #{goodsstock,jdbcType=INTEGER},
+      </if>
+      <if test="buydate != null" >
+        #{buydate,jdbcType=INTEGER},
+      </if>
+      <if test="goodsimgurl != null" >
+        #{goodsimgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null" >
+        #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="goodintro != null" >
+        #{goodintro,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wx.dto.GoodsObj" >
+    update goods
+    <set >
+      <if test="goodsname != null" >
+        GoodsName = #{goodsname,jdbcType=VARCHAR},
+      </if>
+      <if test="buytype != null" >
+        BuyType = #{buytype,jdbcType=INTEGER},
+      </if>
+      <if test="suppcompany != null" >
+        SuppCompany = #{suppcompany,jdbcType=VARCHAR},
+      </if>
+      <if test="model != null" >
+        Model = #{model,jdbcType=VARCHAR},
+      </if>
+      <if test="buyprice != null" >
+        BuyPrice = #{buyprice,jdbcType=INTEGER},
+      </if>
+      <if test="papersize != null" >
+        PaperSize = #{papersize,jdbcType=INTEGER},
+      </if>
+      <if test="papercolor != null" >
+        PaperColor = #{papercolor,jdbcType=INTEGER},
+      </if>
+      <if test="usetype != null" >
+        UseType = #{usetype,jdbcType=INTEGER},
+      </if>
+      <if test="goodsprop != null" >
+        GoodsProp = #{goodsprop,jdbcType=INTEGER},
+      </if>
+      <if test="goodsstatue != null" >
+        GoodsStatue = #{goodsstatue,jdbcType=INTEGER},
+      </if>
+      <if test="goodsstock != null" >
+        GoodsStock = #{goodsstock,jdbcType=INTEGER},
+      </if>
+      <if test="buydate != null" >
+        BuyDate = #{buydate,jdbcType=INTEGER},
+      </if>
+      <if test="goodsimgurl != null" >
+        GoodsImgUrl = #{goodsimgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null" >
+        Memo = #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="goodintro != null" >
+        GoodIntro = #{goodintro,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where GoodsID = #{goodsid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.wx.dto.GoodsObj" >
+    update goods
+    set GoodsName = #{goodsname,jdbcType=VARCHAR},
+      BuyType = #{buytype,jdbcType=INTEGER},
+      SuppCompany = #{suppcompany,jdbcType=VARCHAR},
+      Model = #{model,jdbcType=VARCHAR},
+      BuyPrice = #{buyprice,jdbcType=INTEGER},
+      PaperSize = #{papersize,jdbcType=INTEGER},
+      PaperColor = #{papercolor,jdbcType=INTEGER},
+      UseType = #{usetype,jdbcType=INTEGER},
+      GoodsProp = #{goodsprop,jdbcType=INTEGER},
+      GoodsStatue = #{goodsstatue,jdbcType=INTEGER},
+      GoodsStock = #{goodsstock,jdbcType=INTEGER},
+      BuyDate = #{buydate,jdbcType=INTEGER},
+      GoodsImgUrl = #{goodsimgurl,jdbcType=VARCHAR},
+      Memo = #{memo,jdbcType=VARCHAR},
+      GoodIntro = #{goodintro,jdbcType=LONGVARCHAR}
+    where GoodsID = #{goodsid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wx.dto.GoodsObj" >
+    update goods
+    set GoodsName = #{goodsname,jdbcType=VARCHAR},
+      BuyType = #{buytype,jdbcType=INTEGER},
+      SuppCompany = #{suppcompany,jdbcType=INTEGER},
+      BuyPrice = #{buyprice,jdbcType=INTEGER},
+      PaperSize = #{papersize,jdbcType=INTEGER},
+      PaperColor = #{papercolor,jdbcType=INTEGER},
+      UseType = #{usetype,jdbcType=INTEGER},
+      GoodsProp = #{goodsprop,jdbcType=INTEGER},
+      GoodsStatue = #{goodsstatue,jdbcType=INTEGER},
+      GoodsStock = #{goodsstock,jdbcType=INTEGER},
+      BuyDate = #{buydate,jdbcType=INTEGER},
+      GoodsImgUrl = #{goodsimgurl,jdbcType=VARCHAR},
+      Memo = #{memo,jdbcType=VARCHAR}
+    where GoodsID = #{goodsid,jdbcType=INTEGER}
+  </update>
+</mapper>

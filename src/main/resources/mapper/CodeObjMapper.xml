@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wx.mapper.CodeObjMapper" >
+  <resultMap id="BaseResultMap" type="com.wx.dto.CodeObj" >
+    <id column="CodeID" property="codeid" jdbcType="INTEGER" />
+    <result column="CodeName" property="codename" jdbcType="VARCHAR" />
+    <result column="CodeValue" property="codevalue" jdbcType="INTEGER" />
+    <result column="CodeType" property="codetype" jdbcType="INTEGER" />
+    <result column="ParentID" property="parentid" jdbcType="INTEGER" />
+    <result column="ExtInfo" property="extinfo" jdbcType="VARCHAR" />
+    <result column="Memo" property="memo" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    CodeID, CodeName,CodeValue, CodeType, ParentID, ExtInfo, Memo
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from code
+    where CodeID = #{codeid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from code
+    where CodeID = #{codeid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.wx.dto.CodeObj" >
+    insert into code (CodeID, CodeName, CodeType, 
+      ParentID, ExtInfo, Memo
+      )
+    values (#{codeid,jdbcType=INTEGER}, #{codename,jdbcType=VARCHAR}, #{codetype,jdbcType=INTEGER}, 
+      #{parentid,jdbcType=INTEGER}, #{extinfo,jdbcType=VARCHAR}, #{memo,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wx.dto.CodeObj" >
+    insert into code
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="codeid != null" >
+        CodeID,
+      </if>
+      <if test="codename != null" >
+        CodeName,
+      </if>
+      <if test="codetype != null" >
+        CodeType,
+      </if>
+      <if test="parentid != null" >
+        ParentID,
+      </if>
+      <if test="extinfo != null" >
+        ExtInfo,
+      </if>
+      <if test="memo != null" >
+        Memo,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="codeid != null" >
+        #{codeid,jdbcType=INTEGER},
+      </if>
+      <if test="codename != null" >
+        #{codename,jdbcType=VARCHAR},
+      </if>
+      <if test="codetype != null" >
+        #{codetype,jdbcType=INTEGER},
+      </if>
+      <if test="parentid != null" >
+        #{parentid,jdbcType=INTEGER},
+      </if>
+      <if test="extinfo != null" >
+        #{extinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null" >
+        #{memo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wx.dto.CodeObj" >
+    update code
+    <set >
+      <if test="codename != null" >
+        CodeName = #{codename,jdbcType=VARCHAR},
+      </if>
+      <if test="codetype != null" >
+        CodeType = #{codetype,jdbcType=INTEGER},
+      </if>
+      <if test="parentid != null" >
+        ParentID = #{parentid,jdbcType=INTEGER},
+      </if>
+      <if test="extinfo != null" >
+        ExtInfo = #{extinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null" >
+        Memo = #{memo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CodeID = #{codeid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wx.dto.CodeObj" >
+    update code
+    set CodeName = #{codename,jdbcType=VARCHAR},
+      CodeType = #{codetype,jdbcType=INTEGER},
+      ParentID = #{parentid,jdbcType=INTEGER},
+      ExtInfo = #{extinfo,jdbcType=VARCHAR},
+      Memo = #{memo,jdbcType=VARCHAR}
+    where CodeID = #{codeid,jdbcType=INTEGER}
+  </update>
+</mapper>

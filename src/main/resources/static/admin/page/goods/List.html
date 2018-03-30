@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>管理员列表</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="../../layui/css/layui.css" media="all"/>
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_tnyc012u2rlwstt9.css" media="all"/>
+    <link rel="stylesheet" href="../../css/news.css" media="all"/>
+</head>
+<body class="childrenBody" style="overflow: hidden">
+<div class="layui-form">
+    <form class="layui-form" action="#" style="margin:10px">
+
+        <div class="layui-fluid">
+            <div class="layui-row layui-col-space5">
+                <div class="layui-col-md6">
+                        <label class="layui-form-label">商品名称:</label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="goodsName" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-col-md6">
+                        <label class="layui-form-label">品牌:</label>
+                    <div class="layui-input-inline">
+                        <select name="suppcompany" id="suppcompany">
+                            <option value="">全部</option>
+                            <option value="施乐">施乐</option>
+                            <option value="理光">理光</option>
+                            <option value="夏普">夏普</option>
+                            <option value="东芝">东芝</option>
+                            <option value="其它">其它</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <!--
+                       <div class="layui-row layui-col-space5">
+                           <div class="layui-col-md6">
+                               <label class="layui-form-label">购买时间:</label>
+                               <div class="layui-input-inline">
+                                   <input type="text" id="beginDate" autocomplete="off" class="layui-input" placeholder="开始日期">
+                                   <input type="text" id="endDate"  autocomplete="off" class="layui-input" placeholder="结束日期">
+                               </div>
+                           </div>
+                           <div class="layui-col-md6">
+                               <label class="layui-form-label">价格:</label>
+                               <div class="layui-input-inline">
+                                   <input type="text" id="minPrice" autocomplete="off" class="layui-input"  placeholder="最低价格">
+                                   -
+                                   <input type="text" id="maxPrice" autocomplete="off" class="layui-input" placeholder="最高价格">
+                               </div>
+                           </div>
+                       </div>
+                       -->
+            <div class="layui-row layui-col-space5">
+                <div class="layui-col-md12">
+                    <label class="layui-form-label">功能:</label>
+                    <div class="layui-input-inline">
+                    <input type="checkbox" name="goodsprop" value="1" class="" title="WIFI">
+                    <input type="checkbox" name="goodsprop" value="2" class="" title="双面">
+                    <input type="checkbox" name="goodsprop" value="4" class="" title="USB">
+                    <input type="checkbox" name="goodsprop" value="8" class="" title="彩色">
+                    <input type="checkbox" name="goodsprop" value="16" class="" title="复印">
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-fluid">
+            <div class="layui-row  layui-col-space2">
+                <div class="layui-row" style="text-align: center">
+
+                    <a type="button" data-type="reload" class="layui-btn" lay-submit lay-filter="btngoodsearch">查询</a>
+
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div>
+    <hr/>
+</div>
+<div class="layui-form news_list">
+
+    <div class="layui-btn-group demoTable">
+        <a type="button" class="layui-btn" lay-submit lay-filter="addgoods">新增</a>
+        <a type="button" class="layui-btn" lay-submit lay-filter="setgoods">修改</a>
+        <a type="button" class="layui-btn" lay-submit lay-filter="delgoods">删除</a>
+    </div>
+</div>
+<fieldset class="layui-elem-field">
+    <div class="layui-field-box layui-form" style="margin: 0px;padding: 2px" >
+        <table class="layui-table admin-table" id="goodstableinfo" style="margin:0px" lay-filter="admintable">
+
+        </table>
+    </div>
+</fieldset>
+
+<script type="text/javascript" src="../../layui/layui.js"></script>
+<script type="text/javascript" src="../../js/config.js"></script>
+<script type="text/javascript" src="List.js"></script>
+<script type="text/javascript" src="../../js/mypage.js"></script>
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs" lay-event="photo">相册</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="detail">详情</a>
+</script>
+</body>
+</html>

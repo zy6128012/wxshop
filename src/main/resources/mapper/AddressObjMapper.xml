@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wx.mapper.AddressObjMapper" >
+  <resultMap id="BaseResultMap" type="com.wx.dto.AddressObj" >
+    <id column="AddresID" property="addresid" jdbcType="INTEGER" />
+    <result column="ConName" property="conname" jdbcType="VARCHAR" />
+    <result column="ProviceName" property="provicename" jdbcType="VARCHAR" />
+    <result column="CityName" property="cityname" jdbcType="VARCHAR" />
+    <result column="CountryName" property="countryname" jdbcType="VARCHAR" />
+    <result column="DetailAddress" property="detailaddress" jdbcType="VARCHAR" />
+    <result column="ZipCode" property="zipcode" jdbcType="INTEGER" />
+    <result column="TelPhone" property="telphone" jdbcType="INTEGER" />
+    <result column="UserID" property="userid" jdbcType="INTEGER" />
+    <result column="AddressType" property="addresstype" jdbcType="INTEGER" />
+    <result column="Memo" property="memo" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    AddresID, ConName, ProviceName, CityName, CountryName, DetailAddress, ZipCode, TelPhone, 
+    UserID, AddressType, Memo
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from address
+    where AddresID = #{addresid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from address
+    where AddresID = #{addresid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.wx.dto.AddressObj" >
+    insert into address (AddresID, ConName, ProviceName, 
+      CityName, CountryName, DetailAddress, 
+      ZipCode, TelPhone, UserID, 
+      AddressType, Memo)
+    values (#{addresid,jdbcType=INTEGER}, #{conname,jdbcType=VARCHAR}, #{provicename,jdbcType=VARCHAR}, 
+      #{cityname,jdbcType=VARCHAR}, #{countryname,jdbcType=VARCHAR}, #{detailaddress,jdbcType=VARCHAR}, 
+      #{zipcode,jdbcType=INTEGER}, #{telphone,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, 
+      #{addresstype,jdbcType=INTEGER}, #{memo,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wx.dto.AddressObj" >
+    insert into address
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="addresid != null" >
+        AddresID,
+      </if>
+      <if test="conname != null" >
+        ConName,
+      </if>
+      <if test="provicename != null" >
+        ProviceName,
+      </if>
+      <if test="cityname != null" >
+        CityName,
+      </if>
+      <if test="countryname != null" >
+        CountryName,
+      </if>
+      <if test="detailaddress != null" >
+        DetailAddress,
+      </if>
+      <if test="zipcode != null" >
+        ZipCode,
+      </if>
+      <if test="telphone != null" >
+        TelPhone,
+      </if>
+      <if test="userid != null" >
+        UserID,
+      </if>
+      <if test="addresstype != null" >
+        AddressType,
+      </if>
+      <if test="memo != null" >
+        Memo,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="addresid != null" >
+        #{addresid,jdbcType=INTEGER},
+      </if>
+      <if test="conname != null" >
+        #{conname,jdbcType=VARCHAR},
+      </if>
+      <if test="provicename != null" >
+        #{provicename,jdbcType=VARCHAR},
+      </if>
+      <if test="cityname != null" >
+        #{cityname,jdbcType=VARCHAR},
+      </if>
+      <if test="countryname != null" >
+        #{countryname,jdbcType=VARCHAR},
+      </if>
+      <if test="detailaddress != null" >
+        #{detailaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="zipcode != null" >
+        #{zipcode,jdbcType=INTEGER},
+      </if>
+      <if test="telphone != null" >
+        #{telphone,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="addresstype != null" >
+        #{addresstype,jdbcType=INTEGER},
+      </if>
+      <if test="memo != null" >
+        #{memo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wx.dto.AddressObj" >
+    update address
+    <set >
+      <if test="conname != null" >
+        ConName = #{conname,jdbcType=VARCHAR},
+      </if>
+      <if test="provicename != null" >
+        ProviceName = #{provicename,jdbcType=VARCHAR},
+      </if>
+      <if test="cityname != null" >
+        CityName = #{cityname,jdbcType=VARCHAR},
+      </if>
+      <if test="countryname != null" >
+        CountryName = #{countryname,jdbcType=VARCHAR},
+      </if>
+      <if test="detailaddress != null" >
+        DetailAddress = #{detailaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="zipcode != null" >
+        ZipCode = #{zipcode,jdbcType=INTEGER},
+      </if>
+      <if test="telphone != null" >
+        TelPhone = #{telphone,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null" >
+        UserID = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="addresstype != null" >
+        AddressType = #{addresstype,jdbcType=INTEGER},
+      </if>
+      <if test="memo != null" >
+        Memo = #{memo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where AddresID = #{addresid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wx.dto.AddressObj" >
+    update address
+    set ConName = #{conname,jdbcType=VARCHAR},
+      ProviceName = #{provicename,jdbcType=VARCHAR},
+      CityName = #{cityname,jdbcType=VARCHAR},
+      CountryName = #{countryname,jdbcType=VARCHAR},
+      DetailAddress = #{detailaddress,jdbcType=VARCHAR},
+      ZipCode = #{zipcode,jdbcType=INTEGER},
+      TelPhone = #{telphone,jdbcType=INTEGER},
+      UserID = #{userid,jdbcType=INTEGER},
+      AddressType = #{addresstype,jdbcType=INTEGER},
+      Memo = #{memo,jdbcType=VARCHAR}
+    where AddresID = #{addresid,jdbcType=INTEGER}
+  </update>
+</mapper>

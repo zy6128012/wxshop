@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wx.mapper.OrderGoodsObjMapper" >
+  <resultMap id="BaseResultMap" type="com.wx.dto.OrderGoodsObj" >
+    <id column="OrderGoodsID" property="ordergoodsid" jdbcType="INTEGER" />
+    <result column="GoodsID" property="goodsid" jdbcType="INTEGER" />
+    <result column="GoodsNum" property="goodsnum" jdbcType="INTEGER" />
+    <result column="GoodsPrice" property="goodsprice" jdbcType="INTEGER" />
+    <result column="TotalSum" property="totalsum" jdbcType="INTEGER" />
+    <result column="Memo" property="memo" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    OrderGoodsID, GoodsID, GoodsNum, GoodsPrice, TotalSum, Memo
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from ordergoods
+    where OrderGoodsID = #{ordergoodsid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from ordergoods
+    where OrderGoodsID = #{ordergoodsid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.wx.dto.OrderGoodsObj" >
+    insert into ordergoods (OrderGoodsID, GoodsID, GoodsNum, 
+      GoodsPrice, TotalSum, Memo
+      )
+    values (#{ordergoodsid,jdbcType=INTEGER}, #{goodsid,jdbcType=INTEGER}, #{goodsnum,jdbcType=INTEGER}, 
+      #{goodsprice,jdbcType=INTEGER}, #{totalsum,jdbcType=INTEGER}, #{memo,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wx.dto.OrderGoodsObj" >
+    insert into ordergoods
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="ordergoodsid != null" >
+        OrderGoodsID,
+      </if>
+      <if test="goodsid != null" >
+        GoodsID,
+      </if>
+      <if test="goodsnum != null" >
+        GoodsNum,
+      </if>
+      <if test="goodsprice != null" >
+        GoodsPrice,
+      </if>
+      <if test="totalsum != null" >
+        TotalSum,
+      </if>
+      <if test="memo != null" >
+        Memo,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="ordergoodsid != null" >
+        #{ordergoodsid,jdbcType=INTEGER},
+      </if>
+      <if test="goodsid != null" >
+        #{goodsid,jdbcType=INTEGER},
+      </if>
+      <if test="goodsnum != null" >
+        #{goodsnum,jdbcType=INTEGER},
+      </if>
+      <if test="goodsprice != null" >
+        #{goodsprice,jdbcType=INTEGER},
+      </if>
+      <if test="totalsum != null" >
+        #{totalsum,jdbcType=INTEGER},
+      </if>
+      <if test="memo != null" >
+        #{memo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wx.dto.OrderGoodsObj" >
+    update ordergoods
+    <set >
+      <if test="goodsid != null" >
+        GoodsID = #{goodsid,jdbcType=INTEGER},
+      </if>
+      <if test="goodsnum != null" >
+        GoodsNum = #{goodsnum,jdbcType=INTEGER},
+      </if>
+      <if test="goodsprice != null" >
+        GoodsPrice = #{goodsprice,jdbcType=INTEGER},
+      </if>
+      <if test="totalsum != null" >
+        TotalSum = #{totalsum,jdbcType=INTEGER},
+      </if>
+      <if test="memo != null" >
+        Memo = #{memo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where OrderGoodsID = #{ordergoodsid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wx.dto.OrderGoodsObj" >
+    update ordergoods
+    set GoodsID = #{goodsid,jdbcType=INTEGER},
+      GoodsNum = #{goodsnum,jdbcType=INTEGER},
+      GoodsPrice = #{goodsprice,jdbcType=INTEGER},
+      TotalSum = #{totalsum,jdbcType=INTEGER},
+      Memo = #{memo,jdbcType=VARCHAR}
+    where OrderGoodsID = #{ordergoodsid,jdbcType=INTEGER}
+  </update>
+</mapper>

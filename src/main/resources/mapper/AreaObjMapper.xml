@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wx.mapper.AreaObjMapper" >
+  <resultMap id="BaseResultMap" type="com.wx.dto.AreaObj" >
+    <id column="AreaID" property="areaid" jdbcType="INTEGER" />
+    <result column="AreaCode" property="areacode" jdbcType="INTEGER" />
+    <result column="AreaName" property="areaname" jdbcType="VARCHAR" />
+    <result column="ParentCode" property="parentcode" jdbcType="INTEGER" />
+    <result column="AreaStatus" property="areastatus" jdbcType="INTEGER" />
+    <result column="Memo" property="memo" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    AreaID, AreaCode, AreaName, ParentCode, AreaStatus, Memo
+  </sql>
+  <select id="selecArea" resultMap="BaseResultMap" parameterType="com.wx.datareq.AreaReq" >
+  select *
+    from area
+    <where>
+      <if test="areaID!=null">
+        AND AreaID = #{areaID}
+      </if>
+      <if test="areaCode!=null">
+       AND AreaCode = #{areaCode}
+      </if>
+      <if test="parentCode!=null">
+        AND  ParentCode=#{parentCode}
+      </if>
+    </where>
+</select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from area
+    where AreaID = #{areaid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.wx.dto.AreaObj" >
+    insert into area (AreaID, AreaCode, AreaName, 
+      ParentCode, AreaStatus, Memo
+      )
+    values (#{areaid,jdbcType=INTEGER}, #{areacode,jdbcType=INTEGER}, #{areaname,jdbcType=VARCHAR}, 
+      #{parentcode,jdbcType=INTEGER}, #{areastatus,jdbcType=INTEGER}, #{memo,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wx.dto.AreaObj" >
+    insert into area
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="areaid != null" >
+        AreaID,
+      </if>
+      <if test="areacode != null" >
+        AreaCode,
+      </if>
+      <if test="areaname != null" >
+        AreaName,
+      </if>
+      <if test="parentcode != null" >
+        ParentCode,
+      </if>
+      <if test="areastatus != null" >
+        AreaStatus,
+      </if>
+      <if test="memo != null" >
+        Memo,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="areaid != null" >
+        #{areaid,jdbcType=INTEGER},
+      </if>
+      <if test="areacode != null" >
+        #{areacode,jdbcType=INTEGER},
+      </if>
+      <if test="areaname != null" >
+        #{areaname,jdbcType=VARCHAR},
+      </if>
+      <if test="parentcode != null" >
+        #{parentcode,jdbcType=INTEGER},
+      </if>
+      <if test="areastatus != null" >
+        #{areastatus,jdbcType=INTEGER},
+      </if>
+      <if test="memo != null" >
+        #{memo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wx.dto.AreaObj" >
+    update area
+    <set >
+      <if test="areacode != null" >
+        AreaCode = #{areacode,jdbcType=INTEGER},
+      </if>
+      <if test="areaname != null" >
+        AreaName = #{areaname,jdbcType=VARCHAR},
+      </if>
+      <if test="parentcode != null" >
+        ParentCode = #{parentcode,jdbcType=INTEGER},
+      </if>
+      <if test="areastatus != null" >
+        AreaStatus = #{areastatus,jdbcType=INTEGER},
+      </if>
+      <if test="memo != null" >
+        Memo = #{memo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where AreaID = #{areaid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wx.dto.AreaObj" >
+    update area
+    set AreaCode = #{areacode,jdbcType=INTEGER},
+      AreaName = #{areaname,jdbcType=VARCHAR},
+      ParentCode = #{parentcode,jdbcType=INTEGER},
+      AreaStatus = #{areastatus,jdbcType=INTEGER},
+      Memo = #{memo,jdbcType=VARCHAR}
+    where AreaID = #{areaid,jdbcType=INTEGER}
+  </update>
+</mapper>

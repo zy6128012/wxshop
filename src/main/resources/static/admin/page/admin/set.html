@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>新增管理员</title>
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="format-detection" content="telephone=no">
+	<link rel="stylesheet" href="../../layui/css/layui.css" media="all" />
+</head>
+<body class="childrenBody">
+<form class="layui-form" id="addadminform">
+	<div class="layui-form-item">
+		<div class="layui-inline">
+			<label class="layui-form-label">用户名:</label>
+			<div class="layui-input-inline">
+				<input type="text" id="logonname" class="layui-input" lay-verify="required" placeholder="用户名">
+			</div>
+		</div>
+		<div class="layui-inline">
+			<label class="layui-form-label">姓名:</label>
+			<div class="layui-input-inline">
+				<input type="text" id="truename" class="layui-input" lay-verify="required" placeholder="姓名">
+			</div>
+		</div>
+
+		<div class="layui-inline">
+			<label class="layui-form-label">角色:</label>
+			<div class="layui-input-inline">
+				<select name="manrole" id="manrole" lay-verify="required">
+					<option value="2">普通管理员</option>
+					<option value="1">超级管理员</option>
+				</select>
+			</div>
+		</div>
+		<div class="layui-inline">
+			<label class="layui-form-label">备注:</label>
+			<div class="layui-input-block">
+				<input type="text" name="memo" id="memo" placeholder="备注" autocomplete="off" class="layui-input">
+			</div>
+		</div>
+	</div>
+	<div class="layui-form-item" style="margin-top:25px;text-align: center;">
+		<div class="layui-inline">
+			<a class="layui-btn" lay-submit="" lay-filter="setbtn">提交</a>
+			<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+		</div>
+	</div>
+</form>
+	<script type="text/javascript" src="../../layui/layui.js"></script>
+	<script type="text/javascript" src="set.js"></script>
+<script type="text/javascript" src="../../js/md5.js"></script>
+<script type="text/javascript" src="../../js/config.js"></script>
+</body>
+</html>

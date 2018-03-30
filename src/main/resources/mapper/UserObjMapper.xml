@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wx.mapper.UserObjMapper" >
+  <resultMap id="BaseResultMap" type="com.wx.dto.UserObj" >
+    <id column="UserID" property="userid" jdbcType="INTEGER" />
+    <result column="UserName" property="username" jdbcType="VARCHAR" />
+    <result column="TelPhone" property="telphone" jdbcType="INTEGER" />
+    <result column="EXTName" property="extname" jdbcType="VARCHAR" />
+    <result column="Password" property="password" jdbcType="VARCHAR" />
+    <result column="Sex" property="sex" jdbcType="INTEGER" />
+    <result column="Birthday" property="birthday" jdbcType="INTEGER" />
+    <result column="AddresKey" property="addreskey" jdbcType="INTEGER" />
+    <result column="WXID" property="wxid" jdbcType="VARCHAR" />
+    <result column="ALIID" property="aliid" jdbcType="VARCHAR" />
+    <result column="CreateTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="UserKind" property="userkind" jdbcType="INTEGER" />
+    <result column="UserProp" property="userprop" jdbcType="INTEGER" />
+    <result column="WXBalance" property="wxbalance" jdbcType="INTEGER" />
+    <result column="UserSocre" property="usersocre" jdbcType="INTEGER" />
+    <result column="Memo" property="memo" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    UserID, UserName, TelPhone, EXTName, Password, Sex, Birthday, AddresKey, WXID, ALIID, 
+    CreateTime, UserKind, UserProp, WXBalance, UserSocre, Memo
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where UserID = #{userid,jdbcType=INTEGER}
+  </select>
+
+  <select id="select" resultMap="BaseResultMap" parameterType="com.wx.dto.UserObj" >
+    select
+    <include refid="Base_Column_List" />
+    from user
+    <where>
+      <if test="userid!=null">
+        AND userid= #{userid}
+      </if>
+      <if test="username!=null and username!=''">
+        AND username LIKE  CONCAT('%','${username}','%')
+      </if>
+      <if test="telphone!=null and telphone!=''">
+        AND telphone = #{telphone}
+      </if>
+      <if test="wxid!=null and wxid!=''">
+        AND wxid = #{wxid}
+      </if>
+    </where>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from user
+    where UserID = #{userid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.wx.dto.UserObj" >
+    insert into user (UserID, UserName, TelPhone,
+      EXTName, Password, Sex,
+      Birthday, AddresKey, WXID,
+      ALIID, CreateTime, UserKind,
+      UserProp, WXBalance, UserSocre,
+      Memo)
+    values (#{userid,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{telphone,jdbcType=INTEGER},
+      #{extname,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{sex,jdbcType=INTEGER},
+      #{birthday,jdbcType=INTEGER}, #{addreskey,jdbcType=INTEGER}, #{wxid,jdbcType=VARCHAR},
+      #{aliid,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, #{userkind,jdbcType=INTEGER},
+      #{userprop,jdbcType=INTEGER}, #{wxbalance,jdbcType=INTEGER}, #{usersocre,jdbcType=INTEGER},
+      #{memo,jdbcType=VARCHAR})
+
+    <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="userid">
+      select LAST_INSERT_ID() as value
+    </selectKey>
+  </insert>
+  <insert id="insertSelective" parameterType="com.wx.dto.UserObj" >
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userid != null" >
+        UserID,
+      </if>
+      <if test="username != null" >
+        UserName,
+      </if>
+      <if test="telphone != null" >
+        TelPhone,
+      </if>
+      <if test="extname != null" >
+        EXTName,
+      </if>
+      <if test="password != null" >
+        Password,
+      </if>
+      <if test="sex != null" >
+        Sex,
+      </if>
+      <if test="birthday != null" >
+        Birthday,
+      </if>
+      <if test="addreskey != null" >
+        AddresKey,
+      </if>
+      <if test="wxid != null" >
+        WXID,
+      </if>
+      <if test="aliid != null" >
+        ALIID,
+      </if>
+      <if test="createtime != null" >
+        CreateTime,
+      </if>
+      <if test="userkind != null" >
+        UserKind,
+      </if>
+      <if test="userprop != null" >
+        UserProp,
+      </if>
+      <if test="wxbalance != null" >
+        WXBalance,
+      </if>
+      <if test="usersocre != null" >
+        UserSocre,
+      </if>
+      <if test="memo != null" >
+        Memo,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userid != null" >
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="telphone != null" >
+        #{telphone,jdbcType=INTEGER},
+      </if>
+      <if test="extname != null" >
+        #{extname,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="birthday != null" >
+        #{birthday,jdbcType=INTEGER},
+      </if>
+      <if test="addreskey != null" >
+        #{addreskey,jdbcType=INTEGER},
+      </if>
+      <if test="wxid != null" >
+        #{wxid,jdbcType=VARCHAR},
+      </if>
+      <if test="aliid != null" >
+        #{aliid,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userkind != null" >
+        #{userkind,jdbcType=INTEGER},
+      </if>
+      <if test="userprop != null" >
+        #{userprop,jdbcType=INTEGER},
+      </if>
+      <if test="wxbalance != null" >
+        #{wxbalance,jdbcType=INTEGER},
+      </if>
+      <if test="usersocre != null" >
+        #{usersocre,jdbcType=INTEGER},
+      </if>
+      <if test="memo != null" >
+        #{memo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wx.dto.UserObj" >
+    update user
+    <set >
+      <if test="username != null" >
+        UserName = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="telphone != null" >
+        TelPhone = #{telphone,jdbcType=INTEGER},
+      </if>
+      <if test="extname != null" >
+        EXTName = #{extname,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        Password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        Sex = #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="birthday != null" >
+        Birthday = #{birthday,jdbcType=INTEGER},
+      </if>
+      <if test="addreskey != null" >
+        AddresKey = #{addreskey,jdbcType=INTEGER},
+      </if>
+      <if test="userkind != null" >
+        UserKind = #{userkind,jdbcType=INTEGER},
+      </if>
+      <if test="userprop != null" >
+        UserProp = #{userprop,jdbcType=INTEGER},
+      </if>
+      <if test="wxbalance != null" >
+        WXBalance = #{wxbalance,jdbcType=INTEGER},
+      </if>
+      <if test="usersocre != null" >
+        UserSocre = #{usersocre,jdbcType=INTEGER},
+      </if>
+      <if test="memo != null" >
+        Memo = #{memo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where UserID = #{userid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wx.dto.UserObj" >
+    update user
+    set UserName = #{username,jdbcType=VARCHAR},
+      TelPhone = #{telphone,jdbcType=INTEGER},
+      EXTName = #{extname,jdbcType=VARCHAR},
+      Password = #{password,jdbcType=VARCHAR},
+      Sex = #{sex,jdbcType=INTEGER},
+      Birthday = #{birthday,jdbcType=INTEGER},
+      AddresKey = #{addreskey,jdbcType=INTEGER},
+      WXID = #{wxid,jdbcType=VARCHAR},
+      ALIID = #{aliid,jdbcType=VARCHAR},
+      CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      UserKind = #{userkind,jdbcType=INTEGER},
+      UserProp = #{userprop,jdbcType=INTEGER},
+      WXBalance = #{wxbalance,jdbcType=INTEGER},
+      UserSocre = #{usersocre,jdbcType=INTEGER},
+      Memo = #{memo,jdbcType=VARCHAR}
+    where UserID = #{userid,jdbcType=INTEGER}
+  </update>
+</mapper>

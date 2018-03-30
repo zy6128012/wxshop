@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wx.mapper.OrderObjMapper" >
+  <resultMap id="BaseResultMap" type="com.wx.dto.OrderObj" >
+    <id column="OrderID" property="orderid" jdbcType="INTEGER" />
+    <result column="AddressID" property="addressid" jdbcType="INTEGER" />
+    <result column="OrderTime" property="ordertime" jdbcType="TIMESTAMP" />
+    <result column="TotalSum" property="totalsum" jdbcType="INTEGER" />
+    <result column="PayType" property="paytype" jdbcType="INTEGER" />
+    <result column="OrderStatus" property="orderstatus" jdbcType="INTEGER" />
+    <result column="Memo" property="memo" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    OrderID, AddressID, OrderTime, TotalSum, PayType, OrderStatus, Memo
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from order
+    where OrderID = #{orderid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from order
+    where OrderID = #{orderid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.wx.dto.OrderObj" >
+    insert into order (OrderID, AddressID, OrderTime, 
+      TotalSum, PayType, OrderStatus, 
+      Memo)
+    values (#{orderid,jdbcType=INTEGER}, #{addressid,jdbcType=INTEGER}, #{ordertime,jdbcType=TIMESTAMP}, 
+      #{totalsum,jdbcType=INTEGER}, #{paytype,jdbcType=INTEGER}, #{orderstatus,jdbcType=INTEGER}, 
+      #{memo,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wx.dto.OrderObj" >
+    insert into order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orderid != null" >
+        OrderID,
+      </if>
+      <if test="addressid != null" >
+        AddressID,
+      </if>
+      <if test="ordertime != null" >
+        OrderTime,
+      </if>
+      <if test="totalsum != null" >
+        TotalSum,
+      </if>
+      <if test="paytype != null" >
+        PayType,
+      </if>
+      <if test="orderstatus != null" >
+        OrderStatus,
+      </if>
+      <if test="memo != null" >
+        Memo,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orderid != null" >
+        #{orderid,jdbcType=INTEGER},
+      </if>
+      <if test="addressid != null" >
+        #{addressid,jdbcType=INTEGER},
+      </if>
+      <if test="ordertime != null" >
+        #{ordertime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="totalsum != null" >
+        #{totalsum,jdbcType=INTEGER},
+      </if>
+      <if test="paytype != null" >
+        #{paytype,jdbcType=INTEGER},
+      </if>
+      <if test="orderstatus != null" >
+        #{orderstatus,jdbcType=INTEGER},
+      </if>
+      <if test="memo != null" >
+        #{memo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wx.dto.OrderObj" >
+    update order
+    <set >
+      <if test="addressid != null" >
+        AddressID = #{addressid,jdbcType=INTEGER},
+      </if>
+      <if test="ordertime != null" >
+        OrderTime = #{ordertime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="totalsum != null" >
+        TotalSum = #{totalsum,jdbcType=INTEGER},
+      </if>
+      <if test="paytype != null" >
+        PayType = #{paytype,jdbcType=INTEGER},
+      </if>
+      <if test="orderstatus != null" >
+        OrderStatus = #{orderstatus,jdbcType=INTEGER},
+      </if>
+      <if test="memo != null" >
+        Memo = #{memo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where OrderID = #{orderid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wx.dto.OrderObj" >
+    update order
+    set AddressID = #{addressid,jdbcType=INTEGER},
+      OrderTime = #{ordertime,jdbcType=TIMESTAMP},
+      TotalSum = #{totalsum,jdbcType=INTEGER},
+      PayType = #{paytype,jdbcType=INTEGER},
+      OrderStatus = #{orderstatus,jdbcType=INTEGER},
+      Memo = #{memo,jdbcType=VARCHAR}
+    where OrderID = #{orderid,jdbcType=INTEGER}
+  </update>
+</mapper>
