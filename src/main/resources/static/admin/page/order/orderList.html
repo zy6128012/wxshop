@@ -23,79 +23,75 @@
 		    </div>
 
 		</div>
-		-->
+
 			<div class="layui-fluid">
 			<div class="layui-row  layui-col-space10">
 
 				<div class="layui-col-md6">
 					<label class="layui-form-label">验证手机:</label>
 					<div class="layui-input-inline">
-						<input type="tel" name="phone" lay-verify="required|phone" autocomplete="off" class="layui-input">
+						<input type="tel" name="phone"  autocomplete="off" class="layui-input">
 					</div>
 				</div>
 				<div class="layui-col-md6">
 					<label class="layui-form-label">验证邮箱:</label>
 					<div class="layui-input-inline">
-						<input type="text" name="email" lay-verify="email" autocomplete="off" class="layui-input">
+						<input type="text" name="email"  autocomplete="off" class="layui-input">
 					</div>
 				</div>
-			</div>
+			</div>-->
 			<div class="layui-row  layui-col-space10">
 				<div class="layui-col-md6">
-					<label class="layui-form-label">验证手机:</label>
+					<label class="layui-form-label">状态:</label>
 					<div class="layui-input-inline">
-						<input type="tel" name="phone" lay-verify="required|phone" autocomplete="off" class="layui-input">
+						<select name="orderStatus" id="orderStatus">
+							<option value="0">全部</option>
+							<option value="1">未发货</option>
+							<option value="2">已发货</option>
+						</select>
 					</div>
 				</div>
-				<div class="layui-col-md6">
-					<label class="layui-form-label">验证邮箱:</label>
-					<div class="layui-input-inline">
-						<input type="text" name="email" lay-verify="email" autocomplete="off" class="layui-input">
-					</div>
-				</div>
-			</div>
 
 			</div>
 			<div>
 				<hr />
 			</div>
-			<div class="layui-fluid">
-				<div class="layui-row  layui-col-space2">
-					<div class="layui-row" style="text-align: center">
-				<button class="layui-btn" data-type="reload">搜索</button>
-			</div>
-				</div>
-			</div>
+<div class="layui-fluid">
+	<div class="layui-row  layui-col-space2">
+		<div class="layui-row" style="text-align: center">
+
+			<a type="button" data-type="reload" class="layui-btn" lay-submit lay-filter="btnordersearch">查询</a>
+
+		</div>
+	</div>
+</div>
 		</form>
 	</div>
 <div>
-	<hr />
+	<hr/>
 </div>
-	<div class="layui-form news_list">
-		<!--
-		<div class="layui-btn-group demoTable">
-			<button class="layui-btn" data-type="getCheckData">获取选中行数据</button>
-			<button class="layui-btn" data-type="getCheckLength">获取选中数目</button>
-			<button class="layui-btn" data-type="isAll">验证是否全选</button>
-		</div>
--->
-		<table class="layui-table" lay-data="{height: 'full',page: true, limit:30, url:'../../json/newslist.json'}">
-			<thead>
-			<tr>
-				<th lay-data="{type:'checkbox'}">ID</th>
-				<th lay-data="{field:'newsId', sort: true}">ID</th>
-				<th lay-data="{field:'newsName'}">用户名</th>
-				<th lay-data="{field:'newsAuthor',sort: true}">性别</th>
-				<th lay-data="{field:'newsStatus',align: 'right'}">签名</th>
-				<th lay-data="{field:'newsLook', sort: true, align: 'right'}">积分</th>
-				<th lay-data="{field:'isShow', sort: true,align: 'right'}">评分</th>
-			</tr>
-			</thead>
-		</table>
+<div class="layui-form news_list">
 
+	<div class="layui-btn-group demoTable">
+		<a type="button" class="layui-btn" lay-submit lay-filter="statusSend">已发货</a>
+		<a type="button" class="layui-btn" lay-submit lay-filter="statusNoSend">未发货</a>
 	</div>
+</div>
+<fieldset class="layui-elem-field">
+	<div class="layui-field-box layui-form">
+		<table class="layui-table admin-table" id="t_customerInfo" lay-filter="ordertable1">
+
+		</table>
+	</div>
+
+
+</fieldset>
+
 	<div id="page"></div>
 	<script type="text/javascript" src="../../layui/layui.js"></script>
 	<script type="text/javascript" src="orderList.js"></script>
+
+<script type="text/javascript" src="../../js/config.js"></script>
+<script type="text/javascript" src="../../js/mypage.js"></script>
 </body>
 </html>

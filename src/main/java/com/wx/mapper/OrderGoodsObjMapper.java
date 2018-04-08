@@ -1,7 +1,10 @@
 package com.wx.mapper;
 
+import com.wx.dto.OrderDetailObj;
 import com.wx.dto.OrderGoodsObj;
 import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 @Mapper
 public interface OrderGoodsObjMapper {
@@ -11,7 +14,7 @@ public interface OrderGoodsObjMapper {
 
     int insertSelective(OrderGoodsObj record);
 
-    OrderGoodsObj selectByPrimaryKey(Integer ordergoodsid);
+    List<OrderGoodsObj> selectByPrimaryKey(Integer ordergoodsid);
 
     int updateByPrimaryKeySelective(OrderGoodsObj record);
 

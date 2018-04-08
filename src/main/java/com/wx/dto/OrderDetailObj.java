@@ -1,11 +1,14 @@
 package com.wx.dto;
 
 import java.util.Date;
+import java.util.List;
 
-public class OrderObj {
+public class OrderDetailObj {
     private Integer orderid;
-    private Integer userid;
-    private Integer addressid;
+
+    private UserObj userObj;
+
+    private AddressObj addressObj;
 
     private Date ordertime;
 
@@ -17,6 +20,9 @@ public class OrderObj {
 
     private String memo;
 
+    private List<OrderGoodsObj> orderGoodsObjList;
+
+
     public Integer getOrderid() {
         return orderid;
     }
@@ -25,12 +31,12 @@ public class OrderObj {
         this.orderid = orderid;
     }
 
-    public Integer getAddressid() {
-        return addressid;
+    public UserObj getUserObj() {
+        return userObj;
     }
 
-    public void setAddressid(Integer addressid) {
-        this.addressid = addressid;
+    public void setUserObj(UserObj userObj) {
+        this.userObj = userObj;
     }
 
     public Date getOrdertime() {
@@ -70,14 +76,22 @@ public class OrderObj {
     }
 
     public void setMemo(String memo) {
-        this.memo = memo == null ? null : memo.trim();
+        this.memo = memo;
     }
 
-    public Integer getUserid() {
-        return userid;
+    public List<OrderGoodsObj> getOrderGoodsObjList() {
+        return orderGoodsObjList;
     }
 
-    public void setUserid(Integer userid) {
-        this.userid = userid;
+    public void setOrderGoodsObjList(List<OrderGoodsObj> orderGoodsObjList) {
+        this.orderGoodsObjList = orderGoodsObjList;
+    }
+
+    public AddressObj getAddressObj() {
+        return addressObj;
+    }
+
+    public void setAddressObj(AddressObj addressObj) {
+        this.addressObj = addressObj;
     }
 }

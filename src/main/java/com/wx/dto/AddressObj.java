@@ -15,7 +15,7 @@ public class AddressObj {
 
     private Integer zipcode;
 
-    private Integer telphone;
+    private String telphone;
 
     private Integer userid;
 
@@ -79,11 +79,11 @@ public class AddressObj {
         this.zipcode = zipcode;
     }
 
-    public Integer getTelphone() {
+    public String getTelphone() {
         return telphone;
     }
 
-    public void setTelphone(Integer telphone) {
+    public void setTelphone(String telphone) {
         this.telphone = telphone;
     }
 

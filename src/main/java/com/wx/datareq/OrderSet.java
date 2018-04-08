@@ -7,6 +7,8 @@ import com.wx.dto.OrderGoodsObj;
  */
 public class OrderSet {
     private Integer addressID;
+    private OrderGoodsObj[] orderGoodsObjs;
+    private Integer totalSum;
 
     public Integer getAddressID() {
         return addressID;
@@ -31,9 +33,6 @@ public class OrderSet {
     public void setTotalSum(Integer totalSum) {
         this.totalSum = totalSum;
     }
-
-    private OrderGoodsObj[] orderGoodsObjs;
-    private Integer totalSum;
 
 
 }

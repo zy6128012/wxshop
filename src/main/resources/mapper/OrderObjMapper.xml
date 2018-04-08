@@ -3,6 +3,7 @@
 <mapper namespace="com.wx.mapper.OrderObjMapper" >
   <resultMap id="BaseResultMap" type="com.wx.dto.OrderObj" >
     <id column="OrderID" property="orderid" jdbcType="INTEGER" />
+    <id column="UserID" property="userid" jdbcType="INTEGER" />
     <result column="AddressID" property="addressid" jdbcType="INTEGER" />
     <result column="OrderTime" property="ordertime" jdbcType="TIMESTAMP" />
     <result column="TotalSum" property="totalsum" jdbcType="INTEGER" />
@@ -10,32 +11,39 @@
     <result column="OrderStatus" property="orderstatus" jdbcType="INTEGER" />
     <result column="Memo" property="memo" jdbcType="VARCHAR" />
   </resultMap>
+
   <sql id="Base_Column_List" >
-    OrderID, AddressID, OrderTime, TotalSum, PayType, OrderStatus, Memo
+    OrderID,UserID, AddressID, OrderTime, TotalSum, PayType, OrderStatus, Memo
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    from order
+    from tblorder
     where OrderID = #{orderid,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from order
+    delete from tblorder
     where OrderID = #{orderid,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.wx.dto.OrderObj" >
-    insert into order (OrderID, AddressID, OrderTime, 
+    insert into tblorder (OrderID, AddressID, OrderTime,
       TotalSum, PayType, OrderStatus, 
       Memo)
     values (#{orderid,jdbcType=INTEGER}, #{addressid,jdbcType=INTEGER}, #{ordertime,jdbcType=TIMESTAMP}, 
       #{totalsum,jdbcType=INTEGER}, #{paytype,jdbcType=INTEGER}, #{orderstatus,jdbcType=INTEGER}, 
       #{memo,jdbcType=VARCHAR})
+    <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="orderid">
+      select LAST_INSERT_ID() as value
+    </selectKey>
   </insert>
   <insert id="insertSelective" parameterType="com.wx.dto.OrderObj" >
-    insert into order
+    insert into tblorder
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="orderid != null" >
         OrderID,
+      </if>
+      <if test="userid != null" >
+        UserID,
       </if>
       <if test="addressid != null" >
         AddressID,
@@ -60,6 +68,9 @@
       <if test="orderid != null" >
         #{orderid,jdbcType=INTEGER},
       </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=INTEGER},
+      </if>
       <if test="addressid != null" >
         #{addressid,jdbcType=INTEGER},
       </if>
@@ -79,9 +90,12 @@
         #{memo,jdbcType=VARCHAR},
       </if>
     </trim>
+    <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="orderid">
+      select LAST_INSERT_ID() as value
+    </selectKey>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.wx.dto.OrderObj" >
-    update order
+    update tblorder
     <set >
       <if test="addressid != null" >
         AddressID = #{addressid,jdbcType=INTEGER},
@@ -105,7 +119,7 @@
     where OrderID = #{orderid,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.wx.dto.OrderObj" >
-    update order
+    update tblorder
     set AddressID = #{addressid,jdbcType=INTEGER},
       OrderTime = #{ordertime,jdbcType=TIMESTAMP},
       TotalSum = #{totalsum,jdbcType=INTEGER},
@@ -114,4 +128,26 @@
       Memo = #{memo,jdbcType=VARCHAR}
     where OrderID = #{orderid,jdbcType=INTEGER}
   </update>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.wx.datareq.OrderReq" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Base_Column_List" />
+    from tblorder
+
+    <where>
+      <if test="orderID!=null and orderID != 0">
+        AND OrderID=${orderID}
+      </if>
+      <if test="userID!=null and userID != ''">
+        AND UserID=${userID}
+      </if>
+      <if test="orderStatus!=null and orderStatus != ''">
+        AND <![CDATA[  (OrderStatus&(#{orderStatus}))>0]]>
+      </if>
+    </where>
+
+
+
+  </select>
 </mapper>

@@ -4,20 +4,30 @@ package com.wx.controller;
  * Created by zy612 on 2018/2/9.
  */
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.wx.comClass.LoginRequired;
+import com.wx.comClass.PagesOrder;
+import com.wx.datareq.OrderReq;
 import com.wx.datareq.OrderSet;
-import com.wx.dto.AddressObj;
-import com.wx.dto.OrderObj;
+import com.wx.dto.*;
 import com.wx.mapper.AddressObjMapper;
+import com.wx.mapper.OrderGoodsObjMapper;
 import com.wx.mapper.OrderObjMapper;
+import com.wx.mapper.UserObjMapper;
 import com.wx.result.ProjectResult;
 import com.wx.service.AddressService;
+import com.wx.service.OrderDetailService;
 import com.wx.service.OrderService;
+import com.wx.service.UserService;
 import io.swagger.annotations.*;
+import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @RestController
 @Api(value = "订单信息",description = "订单信息",position = 3)
@@ -27,35 +37,136 @@ public class OrderController {
     private OrderObjMapper orderObjMapper;
     @Autowired
     private OrderService orderService;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private AddressService addressService;
+    @Autowired
+    private OrderDetailService orderDetailService;
 
     @ApiOperation(value="下订单", notes="下订单")
     @ApiParam(name = "orderObj", value = "下订单", required = true)
     @LoginRequired
     @PostMapping(value = "addOrder")
-    public ProjectResult addOrder(@RequestBody OrderSet orderObj){
-        ArrayList addressList=new ArrayList();
-        addressList.add(orderObj);
-        ProjectResult res=new ProjectResult();
-        res.setCount(addressList.size());
-        res.setData(addressList);
-        res.setnStatus(ProjectResult.nStatusSuccess);
+    public ProjectResult addOrder(@RequestBody OrderSet orderSetObj) throws Exception{
+        ProjectResult res = new ProjectResult();
+
+        OrderObj orderObj = new OrderObj();
+        ArrayList<OrderGoodsObj> orderGoodsObjs = new ArrayList<OrderGoodsObj>();
+        orderObj.setAddressid(orderSetObj.getAddressID());
+        orderObj.setUserid(10);
+        Date dayNow = new Date();
+       // orderObj.setOrdertime(dayNow);
+        orderObj.setPaytype(1);//微信支付
+        orderObj.setOrderstatus(1);//下单成功
+
+        Integer nTotalPrice = 0;
+        OrderGoodsObj[] orderGoodsObs = orderSetObj.getOrderGoodsObjs();
+        if (orderGoodsObs != null && orderGoodsObs.length > 0) {
+            for (Integer i = 0; i <  orderGoodsObs.length; i++) {
+                nTotalPrice = nTotalPrice + orderGoodsObs[i].getGoodsprice() * orderGoodsObs[i].getGoodsnum();
+                boolean bRes = orderGoodsObjs.add(orderGoodsObs[i]);
+            }
+        }
+        if (!nTotalPrice.equals( orderSetObj.getTotalSum())) {
+            res.setnStatus(ProjectResult.nStatusError);
+            res.setSzError("总金额累加不正确");
+            return res;
+        }
+        orderObj.setTotalsum(nTotalPrice);
+        orderService.addOrder(orderObj,orderGoodsObjs);
         return res;
     }
+
 
 
     @ApiOperation(value="删除订单", notes="删除订单")
     @PostMapping(value = "delOrder")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "orderID", value = "订单ID号", paramType="query",required = true,dataType ="Integer")})
-    public ProjectResult delAddress(@RequestParam(value = "orderID") Integer orderID){
-        ArrayList addressList=new ArrayList();
-        OrderObj obj=new OrderObj();
-        obj.setOrderid(orderID);
-        addressList.add(obj);
+    public ProjectResult delOrder(@RequestParam(value = "orderID") Integer orderID) throws Exception{
         ProjectResult res=new ProjectResult();
-        res.setCount(addressList.size());
-        res.setData(addressList);
+     Integer nRes=orderService.delOrder(orderID);
+        return res;
+    }
+    @ApiOperation(value="获取订单", notes="获取订单")
+    @PostMapping(value = "getOrder")
+    @ApiParam(name = "orderObj", value = "下订单", required = true)
+    public ProjectResult getOrder(@RequestBody OrderReq orderReq) throws Exception{
+
+        ProjectResult res = new ProjectResult();
+        PagesOrder pagesOrder = orderReq.getPageNum();
+        if (pagesOrder == null) {
+            pagesOrder = new PagesOrder();
+        }
+        if (pagesOrder != null) {
+            PageHelper.startPage(pagesOrder.getPages(), pagesOrder.getPageNum());
+        }
+        List<OrderObj> orderObjs= orderObjMapper.select(orderReq);
+        ArrayList<OrderDetailObj> orderDetailObjs=new ArrayList<OrderDetailObj>();
+
+        if (pagesOrder != null) {
+            PageHelper.startPage(pagesOrder.getPages(), pagesOrder.getPageNum());
+        }
+        if (pagesOrder != null) {
+            PageInfo<OrderObj> pageInfo = new PageInfo<OrderObj>(orderObjs);
+            res.setCount(pageInfo.getTotal());
+        } else {
+            res.setCount(orderObjs.size());
+        }
+        for(Integer i=0;i<orderObjs.size();i++) {
+            OrderObj temp = new OrderObj();
+            temp = orderObjs.get(i);
+            //普通信息
+            OrderDetailObj orderDetailObj = new OrderDetailObj();
+            orderDetailObj.setTotalsum(temp.getTotalsum());
+            orderDetailObj.setOrderid(temp.getOrderid());
+            orderDetailObj.setOrdertime(temp.getOrdertime());
+            orderDetailObj.setPaytype(temp.getPaytype());
+            orderDetailObj.setPaytype(temp.getPaytype());
+            orderDetailObj.setOrderstatus(temp.getOrderstatus());
+            orderDetailObj.setMemo(temp.getMemo());
+
+            //用户信息
+            Integer nUserID = temp.getUserid();
+            UserObj userTemp = new UserObj();
+            userTemp.setUserid(nUserID);
+            List<UserObj> userObjTemp = userService.getUsers(userTemp);
+            orderDetailObj.setUserObj(userObjTemp.get(0));
+
+            //地址信息
+            orderDetailObj.setAddressObj(addressService.selectByID(temp.getAddressid()));
+
+            //订单商品详细信息
+            orderDetailObj.setOrderGoodsObjList(orderDetailService.select(temp.getOrderid()));
+
+            orderDetailObjs.add(orderDetailObj);
+        }
+        res.setData(orderDetailObjs);
         res.setnStatus(ProjectResult.nStatusSuccess);
         return res;
     }
+    @ApiOperation(value="设置发货状态", notes="设置发货状态")
+    @PostMapping(value = "setSend")
+    public ProjectResult setSend(@RequestParam("orderID") Integer nOrderID) throws Exception {
+        Integer nSend = 2;
+        ProjectResult res = new ProjectResult();
+        if(orderService.setStatus(nSend, nOrderID)==true)
+        {
+            res.setnStatus(ProjectResult.nStatusSuccess);
+        }
+        return res;
+    }
+    @ApiOperation(value="设置未发货状态", notes="设置未发货状态")
+    @PostMapping(value = "setNoSend")
+    public ProjectResult setNoSend(@RequestParam("orderID") Integer nOrderID) throws Exception{
+        Integer nSend = 1;
+        ProjectResult res = new ProjectResult();
+        if(orderService.setStatus(nSend, nOrderID)==true)
+        {
+            res.setnStatus(ProjectResult.nStatusSuccess);
+        }
+        return res;
+    }
+
 }

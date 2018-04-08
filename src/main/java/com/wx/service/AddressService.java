@@ -1,5 +1,7 @@
 package com.wx.service;
 
+import com.wx.dto.AddressObj;
+import com.wx.dto.AreaObj;
 import com.wx.mapper.AddressObjMapper;
 import com.wx.mapper.UserObjMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,20 +18,19 @@ public class AddressService {
     private AddressObjMapper addressObjMapper;
 
     @Transactional
-    public  void insertTwo() {
-        /*
-        CityObj city1 = new CityObj();
-        city1.setName("厦门");
-        city1.setState("福建");
-        cityObjMapper.insert(city1);
-
-       // System.out.print(1/0);
-
-        CityObj city2 = new CityObj();
-        city2.setName("深圳");
-        city2.setState("广东");
-        cityObjMapper.insert(city2);
-        */
-
+    public Integer add(AddressObj areaObj) {
+        return addressObjMapper.insert(areaObj);
     }
+    @Transactional
+    public Integer update(AddressObj areaObj) {
+        return addressObjMapper.updateByPrimaryKeySelective(areaObj);
+    }
+    public  Integer delete(Integer nAddress) {
+        return addressObjMapper.deleteByPrimaryKey(nAddress);
+    }
+    @Transactional
+    public AddressObj selectByID(Integer addresid) {
+        return addressObjMapper.selectByPrimaryKey(addresid);
+    }
+
 }

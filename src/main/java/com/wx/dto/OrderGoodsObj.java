@@ -5,6 +5,8 @@ public class OrderGoodsObj {
 
     private Integer goodsid;
 
+    private GoodsObj goodsObj;
+
     private Integer goodsnum;
 
     private Integer goodsprice;
@@ -59,5 +61,13 @@ public class OrderGoodsObj {
 
     public void setMemo(String memo) {
         this.memo = memo == null ? null : memo.trim();
+    }
+
+    public GoodsObj getGoodsObj() {
+        return goodsObj;
+    }
+
+    public void setGoodsObj(GoodsObj goodsObj) {
+        this.goodsObj = goodsObj;
     }
 }

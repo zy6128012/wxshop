@@ -9,7 +9,7 @@
     <result column="CountryName" property="countryname" jdbcType="VARCHAR" />
     <result column="DetailAddress" property="detailaddress" jdbcType="VARCHAR" />
     <result column="ZipCode" property="zipcode" jdbcType="INTEGER" />
-    <result column="TelPhone" property="telphone" jdbcType="INTEGER" />
+    <result column="TelPhone" property="telphone" jdbcType="VARCHAR" />
     <result column="UserID" property="userid" jdbcType="INTEGER" />
     <result column="AddressType" property="addresstype" jdbcType="INTEGER" />
     <result column="Memo" property="memo" jdbcType="VARCHAR" />
@@ -35,7 +35,7 @@
       AddressType, Memo)
     values (#{addresid,jdbcType=INTEGER}, #{conname,jdbcType=VARCHAR}, #{provicename,jdbcType=VARCHAR}, 
       #{cityname,jdbcType=VARCHAR}, #{countryname,jdbcType=VARCHAR}, #{detailaddress,jdbcType=VARCHAR}, 
-      #{zipcode,jdbcType=INTEGER}, #{telphone,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, 
+      #{zipcode,jdbcType=INTEGER}, #{telphone,jdbcType=VARCHAR}, #{userid,jdbcType=INTEGER},
       #{addresstype,jdbcType=INTEGER}, #{memo,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.wx.dto.AddressObj" >
@@ -98,7 +98,7 @@
         #{zipcode,jdbcType=INTEGER},
       </if>
       <if test="telphone != null" >
-        #{telphone,jdbcType=INTEGER},
+        #{telphone,jdbcType=VARCHAR},
       </if>
       <if test="userid != null" >
         #{userid,jdbcType=INTEGER},
@@ -133,7 +133,7 @@
         ZipCode = #{zipcode,jdbcType=INTEGER},
       </if>
       <if test="telphone != null" >
-        TelPhone = #{telphone,jdbcType=INTEGER},
+        TelPhone = #{telphone,jdbcType=VARCHAR},
       </if>
       <if test="userid != null" >
         UserID = #{userid,jdbcType=INTEGER},
@@ -155,7 +155,7 @@
       CountryName = #{countryname,jdbcType=VARCHAR},
       DetailAddress = #{detailaddress,jdbcType=VARCHAR},
       ZipCode = #{zipcode,jdbcType=INTEGER},
-      TelPhone = #{telphone,jdbcType=INTEGER},
+      TelPhone = #{telphone,jdbcType=VARCHAR},
       UserID = #{userid,jdbcType=INTEGER},
       AddressType = #{addresstype,jdbcType=INTEGER},
       Memo = #{memo,jdbcType=VARCHAR}
