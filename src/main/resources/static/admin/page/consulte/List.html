@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>管理员列表</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="../../layui/css/layui.css" media="all"/>
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_tnyc012u2rlwstt9.css" media="all"/>
+    <link rel="stylesheet" href="../../css/news.css" media="all"/>
+</head>
+<body class="childrenBody" style="overflow: hidden">
+<div class="layui-form">
+    <form class="layui-form" action="#" style="margin:10px">
+
+        <div class="layui-fluid">
+            <div class="layui-row layui-col-space10">
+                <div class="layui-col-md6">
+                    <label class="layui-form-label">咨询内容:</label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="Context" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-col-md6">
+                    <label class="layui-form-label">方式:</label>
+                    <div class="layui-input-inline">
+                        <select name="conStatue" id="conStatue">
+                            <option value="0">全部</option>
+                            <option value="1">未回复</option>
+                            <option value="2">已回复</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <hr/>
+        </div>
+        <div class="layui-fluid">
+            <div class="layui-row  layui-col-space2">
+                <div class="layui-row" style="text-align: center">
+
+                    <a type="button" data-type="reload" class="layui-btn" lay-submit lay-filter="btnadminsearch">查询</a>
+
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div>
+    <hr/>
+</div>
+<div class="layui-form news_list">
+
+    <div class="layui-btn-group demoTable">
+        <a type="button" class="layui-btn" lay-submit lay-filter="replay">回复</a>
+
+    </div>
+
+</div>
+<fieldset class="layui-elem-field">
+    <div class="layui-field-box layui-form">
+        <table class="layui-table admin-table" id="t_customerInfo" lay-filter="scoretable">
+
+        </table>
+    </div>
+
+
+</fieldset>
+<script type="text/javascript" src="../../layui/layui.js"></script>
+<script type="text/javascript" src="../../js/config.js"></script>
+<script type="text/javascript" src="../../js/mypage.js"></script>
+<script type="text/javascript" src="list.js"></script>
+
+</body>
+</html>

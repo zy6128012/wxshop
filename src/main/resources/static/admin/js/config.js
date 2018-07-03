@@ -31,6 +31,31 @@ var comjsthis = (function(){
             var vjue=data%100;
             return parseInt(vyuan)+'.'+vjue;
         };
+        _this.getTime = function (data) {
+            var d = new Date(data);    //根据时间戳生成的时间对象
+            var vMonth=d.getMonth()+1;
+            if(vMonth<10)
+            {
+                vMonth="0"+vMonth;
+            }
+            var vDate=d.getDate();
+            if(vDate<10)
+            {
+                vDate="0"+vDate;
+            }
+            var vHours=d.getHours();
+            if(vHours<10)
+            {
+                vHours="0"+vHours;
+            }
+            var vMinutes=d.getMinutes();
+            if(vMinutes<10)
+            {
+                vMinutes="0"+vMinutes;
+            }
+            var date = (d.getFullYear()) + "-" +vMonth+"-"+vDate+" "+vHours+":"+vMinutes;
+            return date;
+        };
         _this.papersize = function (data) {
             if(data==1)
             {

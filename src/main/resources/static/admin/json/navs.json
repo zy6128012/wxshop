@@ -11,22 +11,22 @@
 },{
 	"title" : "商品列表",
 	"icon" : "icon-text",
-	"href" : "page/goods/list.html",
+	"href" : "page/goods/List.html",
 	"spread" : false
 },{
 	"title" : "积分查询",
 	"icon" : "icon-text",
-	"href" : "page/news/newsList.html",
+	"href" : "page/score/List.html",
 	"spread" : false
 },{
 	"title" : "账户列表",
 	"icon" : "&#xe64c;",
-	"href" : "page/links/linksList.html",
+	"href" : "page/user/List.html",
 	"spread" : false
 },{
 	"title" : "咨询信息",
 	"icon" : "&#xe631;",
-	"href" : "page/systemParameter/systemParameter.html",
+	"href" : "page/consulte/List.html",
 	"spread" : false
 },{
 	"title" : "管理员列表",

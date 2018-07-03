@@ -88,7 +88,20 @@ public class GoodsController {
         }
         return res;
     }
-
+    @ApiOperation(value = "更新商品介绍", notes = "更新商品介绍")
+    @LoginRequired
+    @PostMapping(value = "updateGoodsDetail")
+    public ProjectResult updateGoodsDetail(@RequestParam("goodsID") Integer goodsID,@RequestParam("editor") String editor) {
+        ProjectResult res = new ProjectResult();
+        /*
+        if (goodsServie.update(goodsObj) > 0) {
+            res.setnStatus(ProjectResult.nStatusSuccess);
+        } else {
+            res.setnStatus(ProjectResult.nStatusError);
+            res.setSzError("更新失败");
+        }*/
+        return res;
+    }
     @ApiOperation(value = "更新商品", notes = "更新商品")
     @LoginRequired
     @PostMapping(value = "delGoods")

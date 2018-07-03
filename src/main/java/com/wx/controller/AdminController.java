@@ -16,8 +16,14 @@ import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.github.pagehelper.PageHelper;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 @RestController
@@ -72,7 +78,6 @@ public class AdminController {
         if (pagesOrder != null) {
             PageHelper.startPage(pagesOrder.getPages(), pagesOrder.getPageNum());
         }
-
         List<AdminObj> adminObjs = adminService.getAdmin(adminReq);
         if (pagesOrder != null) {
             PageInfo<AdminObj> pageInfo = new PageInfo<AdminObj>(adminObjs);
@@ -82,8 +87,6 @@ public class AdminController {
             res.setCount(adminObjs.size());
         }
         res.setnStatus(ProjectResult.nStatusSuccess);
-
-
         res.setData(adminObjs);
         return res;
     }

@@ -1,5 +1,263 @@
-<html>
-<body>
-hello world client
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>商城首页</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<meta name="description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.">
+<link rel="stylesheet" href="lib/weui.min.css">
+<link rel="stylesheet" href="css/jquery-weui.css">
+<link rel="stylesheet" href="css/style.css">
+  <style>
+    .wy-Module .select_label {
+      display: inline-block;
+      width: 85px;
+      margin-left: 10px;
+      /*margin-top: 1.0em;*/
+    }
+
+    .wy-Module .select_label > div {
+      float: left;
+    }
+  </style>
+</head>
+<body ontouchstart>
+<!--顶部搜索-->
+<header class='weui-header'>
+  <div class="weui-search-bar" id="searchBar">
+    <form class="weui-search-bar__form">
+      <div class="weui-search-bar__box">
+        <i class="weui-icon-search"></i>
+        <input type="search" class="weui-search-bar__input" id="searchInput" placeholder="搜索您想要的商品" required>
+        <a href="javascript:" class="weui-icon-clear" id="searchClear"></a>
+      </div>
+      <label class="weui-search-bar__label" id="searchText" style="transform-origin: 0px 0px 0px; opacity: 1; transform: scale(1, 1);">
+        <i class="weui-icon-search"></i>
+        <span>搜索您想要的商品</span>
+      </label>
+    </form>
+    <a href="javascript:" class="weui-search-bar__cancel-btn" id="searchCancel">取消</a>
+  </div>
+</header>
+<!--主体-->
+<div class='weui-content'>
+  <!--顶部轮播-->
+  <div class="swiper-container swiper-banner">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide"><a href="pro_info.html"><img src="upload/ban0.jpg" /></a></div>
+      <div class="swiper-slide"><a href="pro_list.html"><img src="upload/ban1.png" /></a></div>
+      <div class="swiper-slide"><a href="pro_info.html"><img src="upload/ban2.jpg" /></a></div>
+
+    </div>
+    <div class="swiper-pagination"></div>
+  </div>
+  <!--图标分类-->
+  <div class="weui-flex wy-iconlist-box">
+    <div class="weui-flex__item"><a href="pro_list.html?buytype=1" class="wy-links-iconlist"><div class="img"><img src="images/copymont.png"></div><p>包月随便印</p></a></div>
+    <div class="weui-flex__item"><a href="pro_list.html?buytype=2" class="wy-links-iconlist"><div class="img"><img src="images/copybuy.png"></div><p>购机随便印</p></a></div>
+    <div class="weui-flex__item"><a href="all_orders.html" class="wy-links-iconlist"><div class="img"><img src="images/soceshop.png"></div><p>积分商城</p></a></div>
+    <div class="weui-flex__item"><a href="Settled_in.html" class="wy-links-iconlist"><div class="img"><img src="images/aboutus.png"></div><p>了解我们</p></a></div>
+  </div>
+  <!--新闻切换-->
+  <div class="wy-ind-news">
+    <i class="news-icon-laba"></i>
+    <div class="swiper-container swiper-news">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide"><a href="news_info.html">微信商城正式上线</a></div>
+      </div>
+      <div class="swiper-pagination"></div>
+    </div>
+    <a href="news_list.html" class="newsmore"><i class="news-icon-more"></i></a>
+  </div>
+  <!--精选推荐-->
+  <div class="wy-Module">
+    <div class="wy-Module-tit"><span>快速查找</span></div>
+    <div class="wy-Module-con">
+      <div class="swiper-container swiper-jingxuan" style="padding-top:15px;">
+        <div class="swiper-wrapper">
+
+            <div class="weui-cells weui-cells_form wy-address-edit" style="width:99%">
+
+              <div class="weui-cell">
+                <div class="weui-cell__hd"><label class="weui-label wy-lab">租赁方式：</label></div>
+                <div class="weui-cell__bd">
+                  <div class="weui-cells weui-cells_checkbox">
+                    <label class="weui-cell weui-check__label select_label">
+                      <div class="weui-cell__hd">
+                        <input type="radio" class="weui-check" name="buy_type" value="1" checked="checked" />
+                        <i class="weui-icon-checked"></i>
+                      </div>
+                      <div class="weui-cell__bd">
+                        <p>包月</p>
+                      </div>
+                    </label>
+                    <label class="weui-cell weui-check__label select_label">
+                      <div class="weui-cell__hd">
+                        <input type="radio" class="weui-check" name="buy_type" value="2" id="buytype" />
+                        <i class="weui-icon-checked"></i>
+                      </div>
+                      <div class="weui-cell__bd">
+                        <p>包时</p>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="weui-cell">
+                <div class="weui-cell__hd"><label class="weui-label wy-lab">幅面大小：</label></div>
+                <div class="weui-cell__bd">
+                  <div class="weui-cells weui-cells_checkbox">
+                    <label class="weui-cell weui-check__label select_label">
+                      <div class="weui-cell__hd">
+                        <input type="radio" class="weui-check" name="pagesize" value="1" checked="checked">
+                        <i class="weui-icon-checked"></i>
+                      </div>
+                      <div class="weui-cell__bd">
+                        <p>A4</p>
+                      </div>
+                    </label>
+                    <label class="weui-cell weui-check__label select_label">
+                      <div class="weui-cell__hd">
+                        <input type="radio" class="weui-check" name="pagesize" value="2" >
+                        <i class="weui-icon-checked"></i>
+                      </div>
+                      <div class="weui-cell__bd">
+                        <p>A3</p>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="weui-cell">
+                <div class="weui-cell weui-cell_switch">
+                  <div class="weui-cell__bd">支持彩色：</div>
+                  <div class="weui-cell__ft">
+                    <input class="weui-switch" type="checkbox" value="8" name="goodsprop">
+                  </div>
+                </div>    </div>
+              <div class="weui-cell">
+                <div class="weui-cell weui-cell_switch">
+                  <div class="weui-cell__bd">支持复印：</div>
+                  <div class="weui-cell__ft">
+                    <input class="weui-switch" type="checkbox" value="16"  name="goodsprop">
+                  </div>
+                </div>
+              </div>
+              <div class="weui-cell">
+                <div class="weui-cell weui-cell_switch">
+                  <div class="weui-cell__bd">支持WIFI：</div>
+                  <div class="weui-cell__ft">
+                    <input class="weui-switch" type="checkbox" name="goodsprop">
+                  </div>
+                </div>
+              </div>
+              <div class="weui-btn-area">
+                <a class="weui-btn weui-btn_primary" href="javascript:" id="showTooltips">搜索</a>
+
+              </div>
+            </div>
+
+        </div>
+        <div class="swiper-pagination jingxuan-pagination"></div>
+      </div>
+    </div>
+  </div>
+  <!--酒水专场-->
+
+</div>
+
+<!--底部导航-->
+<div class="foot-black"></div>
+<div class="weui-tabbar wy-foot-menu">
+  <a href="index.html" class="weui-tabbar__item weui-bar__item--on">
+    <div class="weui-tabbar__icon foot-menu-home"></div>
+    <p class="weui-tabbar__label">首页</p>
+  </a>
+    <a href="pro_list.html" class="weui-tabbar__item">
+        <div class="weui-tabbar__icon foot-menu-cart"></div>
+        <p class="weui-tabbar__label">设备</p>
+    </a>
+
+  <a href="mine.html" class="weui-tabbar__item">
+    <div class="weui-tabbar__icon foot-menu-member"></div>
+    <p class="weui-tabbar__label">我的</p>
+  </a>
+</div>
+<style>
+  .weui-cell{
+    padding: 5px 5px;
+  }
+  </style>
+<script src="lib/jquery-2.1.4.js"></script> 
+<script src="lib/fastclick.js"></script> 
+<script>
+  $(function() {
+    FastClick.attach(document.body);
+
+      $.ajax({
+          type: 'POST'
+          , url: '/user/getLoginUser'
+          , data: null
+          , dataType: 'json'
+          , contentType: "application/json"
+          , success: function (res) {
+
+              alert(res.data.wxid+res.data.username);
+          }
+      });
+
+  });
+</script> 
+<script src="js/jquery-weui.js"></script>
+<script src="js/swiper.js"></script>
+<script>
+	$(".swiper-banner").swiper({
+        loop: true,
+        autoplay: 3000
+      });
+	$(".swiper-news").swiper({
+		loop: true,
+		direction: 'vertical',
+		paginationHide :true,
+        autoplay: 30000
+      });
+	 $(".swiper-jingxuan").swiper({
+		pagination: '.swiper-pagination',
+		loop: true,
+		paginationType:'fraction',
+        slidesPerView:3,
+        paginationClickable: true,
+        spaceBetween: 2
+      });
+	 $(".swiper-jiushui").swiper({
+		pagination: '.swiper-pagination',
+		paginationType:'fraction',
+		loop: true,
+        slidesPerView:3,
+		slidesPerColumn: 2,
+        paginationClickable: true,
+        spaceBetween:2
+      });
+
+    $(function() {
+
+
+        $("#showTooltips").click(function () {
+            var vbuytype = getcheckvalue($("input:radio[name='buy_type']"));
+            var goodsprop = getcheckvalue($("input:checkbox[name='goodsprop']"));
+            var pagesize = getcheckvalue($("input:radio[name='pagesize']"));
+            window.location.href="pro_list.html?buytype=" + vbuytype + "&papersize=" + pagesize + "&goodsprop=" + goodsprop;
+        });
+        function getcheckvalue(checklist) {
+            var value = 0;
+            for(var i = 0; i < checklist.length; i++){
+                if(checklist[i].checked)
+                    value=value| parseInt(checklist[i].value);
+            }
+            return value;
+        }
+    });
+</script>
 </body>
 </html>

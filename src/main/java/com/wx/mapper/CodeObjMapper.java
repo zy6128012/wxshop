@@ -11,6 +11,8 @@ public interface CodeObjMapper {
 
     int insertSelective(CodeObj record);
 
+    int insertwto(int k,String m);
+
     CodeObj selectByPrimaryKey(Integer codeid);
 
     int updateByPrimaryKeySelective(CodeObj record);

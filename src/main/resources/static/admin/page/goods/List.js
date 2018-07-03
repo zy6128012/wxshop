@@ -8,6 +8,15 @@ layui.use(['table','form','jquery','laydate'], function() {
     function getdata() {
 
     }
+    table.on('tool(admintable)', function(obj){
+        var data = obj.data;
+        if(obj.event === 'detail'){
+            window.open("../edit.html?type=detail&id="+data.goodsid );
+            //layer.msg('ID：'+ data.goodsid + ' 的查看操作');
+        } else if(obj.event === 'photo'){
+            window.open("../edit.html?type=photo&id="+data.goodsid );
+        }
+    });
 
     laydate.render({
         elem: '#beginDate'
@@ -44,6 +53,7 @@ layui.use(['table','form','jquery','laydate'], function() {
         , page: true
         , limit: comjs.limit
     });
+
     //排序
     table.on('sort(admintable)', function(obj){ //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
         //尽管我们的 table 自带排序功能，但并没有请求服务端。
@@ -121,7 +131,7 @@ layui.use(['table','form','jquery','laydate'], function() {
             content : "set.html?id="+vID,
             success : function(layero, index){
                 setTimeout(function(){
-                    layui.layer.tips('新增商品', '.layui-layer-setwin .layui-layer-close', {
+                    layui.layer.tips('修改商品', '.layui-layer-setwin .layui-layer-close', {
                         tips: 3
                     });
                 },500)

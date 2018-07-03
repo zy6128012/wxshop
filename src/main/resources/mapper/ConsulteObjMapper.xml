@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wx.mapper.ConsulteObjMapper" >
+  <resultMap id="BaseResultMap" type="com.wx.dto.ConsulteObj" >
+    <id column="ConID" property="conID" jdbcType="INTEGER" />
+    <result column="ConTent" property="conTent" jdbcType="VARCHAR" />
+    <result column="ConType" property="conType" jdbcType="INTEGER" />
+    <result column="ConTime" property="conTime" jdbcType="TIMESTAMP" />
+    <result column="ConDate" property="conDate" jdbcType="INTEGER" />
+    <result column="RefContent" property="refContent" jdbcType="VARCHAR" />
+    <result column="ConStatue" property="conStatue" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ConID, ConTent, ConType, RefContent, ConTime, ConDate, RefContent,ConStatue
+  </sql>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.wx.datareq.ConsulteReq" >
+    select *
+    from consulte
+    <where>
+      <if test="Context!=null">
+        AND ConTent LIKE  CONCAT('%','${Context}','%')
+      </if>
+      <if test="conDate!=null">
+        AND ConDate = #{conDate}
+      </if>
+      <if test="conStatue!=null">
+        AND ConStatue = #{conStatue}
+      </if>
+    </where>
+  </select>
+  <update id="replay" parameterType="com.wx.datareq.ConsulteReplay" >
+    update consulte
+    <set >
+      <if test="RepalyContent != null" >
+        RefContent = #{RepalyContent,jdbcType=VARCHAR}, ConStatue = 2,
+      </if>
+    </set>
+    where ConID = #{conID,jdbcType=INTEGER}
+  </update>
+</mapper>

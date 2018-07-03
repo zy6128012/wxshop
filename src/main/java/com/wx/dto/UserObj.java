@@ -13,7 +13,7 @@ public class UserObj implements Serializable{
     @ApiModelProperty(value = "用户名")
     private String username;
     @ApiModelProperty(value = "手机")
-    private Integer telphone;
+    private String telphone;
     @ApiModelProperty(value = "小名")
     private String extname;
     @ApiModelProperty(value = "密码")
@@ -57,11 +57,11 @@ public class UserObj implements Serializable{
         this.username = username == null ? null : username.trim();
     }
 
-    public Integer getTelphone() {
+    public String getTelphone() {
         return telphone;
     }
 
-    public void setTelphone(Integer telphone) {
+    public void setTelphone(String telphone) {
         this.telphone = telphone;
     }
 

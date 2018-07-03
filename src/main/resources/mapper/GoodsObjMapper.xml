@@ -282,10 +282,20 @@
       UseType = #{usetype,jdbcType=INTEGER},
       GoodsProp = #{goodsprop,jdbcType=INTEGER},
       GoodsStatue = #{goodsstatue,jdbcType=INTEGER},
-      GoodsStock = #{goodsstock,jdbcType=INTEGER},
+      GoodsStock = #{goodsstock,jdbcType=INTEGER},r
       BuyDate = #{buydate,jdbcType=INTEGER},
       GoodsImgUrl = #{goodsimgurl,jdbcType=VARCHAR},
       Memo = #{memo,jdbcType=VARCHAR}
     where GoodsID = #{goodsid,jdbcType=INTEGER}
+  </update>
+  <update id="updatePhoto">
+     update goods
+    set GoodsImgUrl =  #{goodImaurl,jdbcType=VARCHAR}
+    where GoodsID = #{goodid,jdbcType=INTEGER}
+  </update>
+  <update id="updateDetail">
+    update goods
+    set GoodIntro =  #{goodIntro,jdbcType=VARCHAR}
+    where GoodsID = #{goodid,jdbcType=INTEGER}
   </update>
 </mapper>

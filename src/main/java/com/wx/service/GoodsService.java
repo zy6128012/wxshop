@@ -29,7 +29,14 @@ public class GoodsService {
         Integer nGoodsid = goodsObjMapper.updateByPrimaryKeySelective(goodsObj);
         return nGoodsid;
     }
-
+    public Integer updatePhoto(Integer goodID,String goodPhoto) {
+        Integer nGoodsid = goodsObjMapper.updatePhoto(goodPhoto,goodID);
+        return nGoodsid;
+    }
+    public Integer updateDetail(Integer goodID,String goodDetail) {
+        Integer nGoodsid = goodsObjMapper.updateDetail(goodDetail,goodID);
+        return nGoodsid;
+    }
     public Integer deleteByPrimaryKey(Integer goodsid) {
         return goodsObjMapper.deleteByPrimaryKey(goodsid);
     }

@@ -74,7 +74,8 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.wx.dto.CodeObj" >
+    <insert id="insertwto"></insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.wx.dto.CodeObj" >
     update code
     <set >
       <if test="codename != null" >

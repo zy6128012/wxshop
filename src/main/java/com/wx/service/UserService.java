@@ -1,5 +1,6 @@
 package com.wx.service;
 
+import com.wx.datareq.UserReq;
 import com.wx.dto.UserObj;
 import com.wx.mapper.UserObjMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +39,16 @@ public class UserService {
         }
         return null;
     }
-
+    public List<UserObj> getUsers(UserReq userReq) {
+        UserObj userObj = new UserObj();
+        userObj.setTelphone(userReq.getTelphone());
+        userObj.setUsername(userReq.getUserName());
+        List<UserObj> userObjsRes = userObjMapper.select(userObj);
+        if (userObjsRes != null && userObjsRes.size() > 0) {
+            return userObjsRes;
+        }
+        return null;
+    }
     public Integer addUser(UserObj userObj) {
         Date date = new Date();
         Timestamp timeStamp = new Timestamp(date.getTime());
