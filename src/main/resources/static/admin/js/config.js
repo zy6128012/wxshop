@@ -27,6 +27,10 @@ var comjsthis = (function(){
             return "";
         };
         _this.price = function (data) {
+            if(data<=1)
+            {
+                return data/100;
+            }
             var vyuan=data/100;
             var vjue=data%100;
             return parseInt(vyuan)+'.'+vjue;

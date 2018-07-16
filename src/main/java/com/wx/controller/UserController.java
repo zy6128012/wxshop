@@ -54,6 +54,7 @@ public class UserController {
     @LoginRequired
     public String login(HttpServletRequest request, HttpServletResponse response) {
         String szCode=request.getParameter("code");
+        logger.info("code="+szCode);
         if(szCode.equals("abc123"))
         {
             HttpSession seesionTemp=request.getSession();
@@ -75,7 +76,7 @@ public class UserController {
 
         String szopenid = obj.getString("openId");
         String nickname= obj.getString("nickname");
-
+        logger.info("szopenid="+szopenid);
         HttpSession seesion=request.getSession();
         if (!szopenid.equals("")) {
             UserReq userReq = new UserReq();
@@ -110,6 +111,11 @@ public class UserController {
             res.setnStatus(ProjectResult.nStatusSuccess);
             res.setData(user);
         }else{
+            UserObj userObjs = userServie.getUserByWXID("abc123");
+            if (userObjs != null) {
+                HttpSession sessionTemp = request.getSession();
+                sessionTemp.setAttribute("loginUser", userObjs);
+            }
             res.setnStatus(ProjectResult.nStatusError);
         }
         return res;

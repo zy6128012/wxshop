@@ -53,13 +53,13 @@ layui.use(['table','form','jquery'], function() {
                 field: 'orderstatus', title: '状态', templet: function (d) {
                     var orderstatus = d.orderstatus;
                     if (orderstatus == "1") {
-                        vmansz = "未发货";
+                        vmansz = "未支付";
                     }
                     else if (orderstatus == "2") {
-                        vmansz = "已发货";
+                        vmansz = "已支付,未发货";
                     }
-                    else {
-                        vmansz = "其他";
+                    else if (orderstatus == "4") {
+                        vmansz = "已发货";
                     }
                     return vmansz;
                 }

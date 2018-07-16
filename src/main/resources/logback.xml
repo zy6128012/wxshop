@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <appender name="CONSOLE-APPENDER" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <!--<pattern>%red(%d{yyyy-MM-dd HH:mm:ss}) %green([%thread]) %highlight(%-5level) %boldMagenta(%logger) - %cyan(%msg%n)</pattern>-->
+            <Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg %n</Pattern>
+        </encoder>
+    </appender>
+
+    <appender name="COMMON-DEFAULT-APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>common-default.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>common-default.%d{yyyy-MM-dd}.log</FileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <!--<pattern> %red(%d{yyyy-MM-dd HH:mm:ss}) %green([%thread]) %highlight(%-5level) %boldMagenta(%logger) - %cyan(%msg%n)</pattern>-->
+           <Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{35} - %msg %n</Pattern>
+        </encoder>
+    </appender>
+
+    <appender name="WEB-REQUEST-APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>web-request.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>web-request.%d{yyyy-MM-dd}.log</FileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <!--<pattern> %red(%d{yyyy-MM-dd HH:mm:ss}) %green([%thread]) %highlight(%-5level) %boldMagenta(%logger) - %cyan(%msg%n)</pattern>-->
+            <Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level - %msg %n</Pattern>
+        </encoder>
+    </appender>
+
+    <appender name="DB-EXECUTE-APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--<file>${LOG_PATH}/db-execute.log</file>-->
+        <file>db-execute.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>db-execute.%d{yyyy-MM-dd}.log</FileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <!--<pattern> %red(%d{yyyy-MM-dd HH:mm:ss}) %green([%thread]) %highlight(%-5level) %boldMagenta(%logger) - %cyan(%msg%n)</pattern>-->
+            <Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level - %msg %n</Pattern>
+        </encoder>
+    </appender>
+
+    <!--<logger name="DB-EXECUTE" level="DEBUG">-->
+        <!--<appender-ref ref="DB-EXECUTE-APPENDER"/>-->
+        <!--<appender-ref ref="COMMON-DEFAULT-APPENDER"/>-->
+        <!--<appender-ref ref="CONSOLE-APPENDER"/>-->
+    <!--</logger>-->
+
+    <!--<logger name="WEB-REQUEST" level="INFO">-->
+        <!--<appender-ref ref="WEB-REQUEST-APPENDER"/>-->
+    <!--</logger>-->
+
+    <root level="INFO">
+        <appender-ref ref="CONSOLE-APPENDER"/>
+        <appender-ref ref="COMMON-DEFAULT-APPENDER"/>
+    </root>
+</configuration>

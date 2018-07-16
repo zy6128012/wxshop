@@ -29,25 +29,25 @@ import java.util.List;
 @Service
 public class OrderService {
 
-       @Autowired
-       private OrderObjMapper orderObjMapper;
+    @Autowired
+    private OrderObjMapper orderObjMapper;
 
-        @Autowired
-        private OrderGoodsObjMapper orderGoodsObjMapper;
+    @Autowired
+    private OrderGoodsObjMapper orderGoodsObjMapper;
 
     @Autowired
     private TransactionTemplate transactionTemplate;
 
-   // @Transactional(readOnly = true, rollbackFor = Exception.class)
+    // @Transactional(readOnly = true, rollbackFor = Exception.class)
     public Integer addOrder(OrderObj orderObj, ArrayList<OrderGoodsObj> orderGoodsObjs) {
-
         return transactionTemplate.execute(new TransactionCallback<Integer>() {
             @Override
             public Integer doInTransaction(TransactionStatus transactionStatus) {
                 try {
                     Integer nOderRes = orderObjMapper.insertSelective(orderObj);
+                    Integer norderID = orderObj.getOrderid();
                     if (nOderRes > 0) {
-                        Integer norderID = orderObj.getOrderid();
+
                         for (Integer i = 0; i < orderGoodsObjs.size(); i++) {
                             OrderGoodsObj temp = new OrderGoodsObj();
                             temp = orderGoodsObjs.get(i);
@@ -61,7 +61,7 @@ public class OrderService {
                     } else {
                         return 0;
                     }
-                    return 1;
+                    return norderID;
                 } catch (Exception e) {
                     transactionStatus.setRollbackOnly();
                     //  transactionStatus.s
@@ -84,7 +84,8 @@ public class OrderService {
         }
         return false;
     }
-   // @Transactional(readOnly = true, rollbackFor = Exception.class)
+
+    // @Transactional(readOnly = true, rollbackFor = Exception.class)
     public Integer delOrder(Integer nOrderID) {
         return transactionTemplate.execute(new TransactionCallback<Integer>() {
             @Override
@@ -102,6 +103,7 @@ public class OrderService {
             }
         });
     }
+
     public List<OrderObj> select(OrderReq orderReq) {
         return orderObjMapper.select(orderReq);
     }

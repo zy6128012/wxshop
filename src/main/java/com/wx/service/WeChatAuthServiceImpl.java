@@ -3,6 +3,7 @@ package com.wx.service;
 import com.alibaba.fastjson.JSONObject;
 import com.wx.comClass.DefaultAuthServiceImpl;
 import com.wx.comClass.WeChatAuthService;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -13,14 +14,17 @@ import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URLEncoder;
 
+
 @Service
 public class WeChatAuthServiceImpl extends DefaultAuthServiceImpl implements WeChatAuthService {
 
     private Logger logger = LoggerFactory.getLogger(WeChatAuthServiceImpl.class);
 
     //请求此地址即跳转到二维码登录界面
+    // private static final String AUTHORIZATION_URL ="https://open.weixin.qq.com/connect/qrconnect?appid=%s&redirect_uri=%s&response_type=code&scope=%s&state=%s#wechat_redirect";
     private static final String AUTHORIZATION_URL =
-            "https://open.weixin.qq.com/connect/oauth2/authorize?appid=%s&redirect_uri=%s&response_type=code&scope=%s&state=%s#wechat_redirect";
+            "https://open.weixin.qq.com/connect/oauth2/authorize?appid=%s&redirect_uri=ENCODE(%s)&response_type=code&scope=%s&state=%s#wechat_redirect";
+
 
     // 获取用户 openid 和access——toke 的 URL
     private static final String ACCESSTOKE_OPENID_URL =
@@ -32,44 +36,41 @@ public class WeChatAuthServiceImpl extends DefaultAuthServiceImpl implements WeC
     private static final String USER_INFO_URL =
             "https://api.weixin.qq.com/sns/userinfo?access_token=%s&openid=%s&lang=zh_CN";
 
-    private static final String APP_ID="xxxxxx";
-    private static final String APP_SECRET="xxxxxx";
-    private static final String SCOPE = "snsapi_login";
+    private static final String APP_ID="wx83d3b03875550c6f";
+    private static final String APP_SECRET="7e0599281ccf4c1f083b16fee9edd715";
+    private static final String SCOPE = "snsapi_userinfo";
 
-    private String callbackUrl = "https://www.xxx.cn/auth/wechat"; //回调域名
+    private String callbackUrl = "www.wxshop.windtp.cn/user/login"; //回调域名
 
     @Override
     public String getAuthorizationUrl() throws UnsupportedEncodingException {
         callbackUrl = URLEncoder.encode(callbackUrl,"utf-8");
         String url = String.format(AUTHORIZATION_URL,APP_ID,callbackUrl,SCOPE,System.currentTimeMillis());
+
         return url;
     }
-
 
     @Override
     public String getAccessToken(String code) {
         String url = String.format(ACCESSTOKE_OPENID_URL,APP_ID,APP_SECRET,code);
-
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url);
         URI uri = builder.build().encode().toUri();
-
         String resp = getRestTemplate().getForObject(uri, String.class);
-        //logger.error("getAccessToken resp = "+resp);
+        logger.info(resp);
         if(resp.contains("openid")){
             JSONObject jsonObject = JSONObject.parseObject(resp);
             String access_token = jsonObject.getString("access_token");
-            String openId = jsonObject.getString("openid");;
+            String openId = jsonObject.getString("openid");
+            String nickname=jsonObject.getString("nickname");
 
             JSONObject res = new JSONObject();
             res.put("access_token",access_token);
             res.put("openId",openId);
             res.put("refresh_token",jsonObject.getString("refresh_token"));
-
+            res.put("nickname",nickname);
             return res.toJSONString();
-        }else{
-           // throw new ServiceException("获取token失败，msg = "+resp);
         }
-        return null;
+        return "";
     }
 
     //微信接口中，token和openId是一起返回，故此方法不需实现
@@ -87,7 +88,7 @@ public class WeChatAuthServiceImpl extends DefaultAuthServiceImpl implements WeC
         String resp = getRestTemplate().getForObject(uri, String.class);
         logger.error("getUserInfo resp = "+resp);
         if(resp.contains("errcode")){
-          //  throw new ServiceException("获取用户信息错误，msg = "+resp);
+            //   throw new ServiceException("获取用户信息错误，msg = "+resp);
         }else{
             JSONObject data =JSONObject.parseObject(resp);
 

@@ -18,9 +18,11 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.List;
+
 
 @RestController
-@Api(value = "用户地址模块",description = "个人信息中的邮寄地址维护",position = 3)
 @RequestMapping("/address")
 public class AddressController {
     @Autowired
@@ -76,56 +78,50 @@ public class AddressController {
         return res;
     }
 
-
-
-    @ApiOperation(value = "微信获取登录界面", notes = "微信获取登录界面")
+    @ApiOperation(value = "获取个人的通讯地址", notes = "获取个人的通讯地址")
+    @ApiParam(name = "getAddress", value = "个人的通讯地址", required = true)
     @LoginRequired
-    @RequestMapping(value = "/wxLoginPage",method = RequestMethod.GET)
-    public ProjectResult wxLoginPage() throws Exception {
+    @GetMapping(value = "getAddress")
+    public ProjectResult getAddress() {
         ProjectResult res = new ProjectResult();
 
-        String uri = weChatAuthService.getAuthorizationUrl();
-        return res;//loginPage(uri);
-    }
-    @ApiOperation(value = "微信登录", notes = "微信登录")
-    @LoginRequired
-    @RequestMapping(value = "/wechat")
-    public void callback(String code,HttpServletRequest request,HttpServletResponse response) throws Exception {
-        String result = weChatAuthService.getAccessToken(code);
-        JSONObject jsonObject = JSONObject.parseObject(result);
-
-        String access_token = jsonObject.getString("access_token");
-        String openId = jsonObject.getString("openId");
-//        String refresh_token = jsonObject.getString("refresh_token");
-
-        // 保存 access_token 到 cookie，两小时过期
-        Cookie accessTokencookie = new Cookie("accessToken", access_token);
-        accessTokencookie.setMaxAge(60 *2);
-        response.addCookie(accessTokencookie);
-
-        Cookie openIdCookie = new Cookie("openId", openId);
-        openIdCookie.setMaxAge(60 *2);
-        response.addCookie(openIdCookie);
-
-        //根据openId判断用户是否已经登陆过
-       // KmsUser user = userService.getUserByCondition(openId);
-/*
-        if (user == null) {
-            response.sendRedirect(request.getContextPath() + "/student/html/index.min.html#/bind?type="+Constants.LOGIN_TYPE_WECHAT);
+        List<AddressObj> addList= addressService.selectByUserID(10);
+        if (addList.size() > 0) {
+            res.setData(addList);
+            res.setCount(addList.size());
+            res.setnStatus(ProjectResult.nStatusSuccess);
         } else {
-            //如果用户已存在，则直接登录
-            response.sendRedirect(request.getContextPath() + "/student/html/index.min.html#/app/home?open_id=" + openId);
+            res.setnStatus(ProjectResult.nStatusSuccess);
+            res.setSzError("获取联系地址失败");
         }
-    */
+        return res;
     }
+    @ApiOperation(value = "获取个人的通讯地址byid", notes = "获取个人的通讯地址byid")
+    @ApiParam(name = "getAddressbyid", value = "获取个人的通讯地址byid", required = true)
+    @LoginRequired
+    @GetMapping(value = "getAddressbyid")
+    public ProjectResult getAddressbyid(Integer id) {
+        ProjectResult res = new ProjectResult();
 
+        AddressObj address= addressService.selectByID(id);
+        if (address!=null) {
+            List<AddressObj> Temp=new ArrayList<AddressObj>();
+            Temp.add(address);
+            res.setData(Temp);
+            res.setCount(1);
+            res.setnStatus(ProjectResult.nStatusSuccess);
+        } else {
+            res.setnStatus(ProjectResult.nStatusSuccess);
+            res.setSzError("获取联系地址失败");
+        }
+        return res;
+    }
     @ApiOperation(value = "更新个人的通讯地址", notes = "更新个人的通讯地址")
     @ApiParam(name = "addressObj", value = "个人的通讯地址", required = true)
-    @LoginRequired
     @PostMapping(value = "updateAddress")
     public ProjectResult updateAddress(@RequestBody AddressObj addressObj) {
         ProjectResult res = new ProjectResult();
-        if (addressObj.getAddresid() == null || addressObj.getAddresid() != 0) {
+        if (addressObj.getAddresid() == null) {
             res.setSzError("修改必须参入地址ID号");
             res.setnStatus(ProjectResult.nStatusError);
             return res;
@@ -141,10 +137,11 @@ public class AddressController {
     }
 
     @ApiOperation(value = "删除个人的通讯地址", notes = "删除个人的通讯地址")
-    @PostMapping(value = "delAddress")
+    @GetMapping(value = "delAddress")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "addressID", value = "通讯地址ID号", paramType = "query", required = true, dataType = "Integer")})
     public ProjectResult delAddress(@RequestParam(value = "addressID") Integer addressID) {
+
         ProjectResult res = new ProjectResult();
         if (addressID == 0) {
             res.setnStatus(ProjectResult.nStatusError);

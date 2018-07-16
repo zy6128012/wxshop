@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>文章列表--layui后台管理模板</title>
+	<title>新闻发布</title>
 	<meta name="renderer" content="webkit">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -13,59 +13,83 @@
 	<link rel="stylesheet" href="//at.alicdn.com/t/font_tnyc012u2rlwstt9.css" media="all" />
 	<link rel="stylesheet" href="../../css/news.css" media="all" />
 </head>
-<body class="childrenBody">
-	<blockquote class="layui-elem-quote news_search">
-		<div class="layui-inline">
-		    <div class="layui-input-inline">
-		    	<input type="text" value="" placeholder="请输入关键字" class="layui-input search_input">
-		    </div>
-		    <a class="layui-btn search_btn">查询</a>
-		</div>
-		<div class="layui-inline">
-			<a class="layui-btn layui-btn-normal newsAdd_btn">添加文章</a>
-		</div>
-		<div class="layui-inline">
-			<a class="layui-btn recommend" style="background-color:#5FB878">推荐文章</a>
-		</div>
-		<div class="layui-inline">
-			<a class="layui-btn audit_btn">审核文章</a>
-		</div>
-		<div class="layui-inline">
-			<a class="layui-btn layui-btn-danger batchDel">批量删除</a>
-		</div>
-		<div class="layui-inline">
-			<div class="layui-form-mid layui-word-aux">本页面刷新后除新添加的文章外所有操作无效，关闭页面所有数据重置</div>
-		</div>
-	</blockquote>
-	<div class="layui-form news_list">
-	  	<table class="layui-table">
-		    <colgroup>
-				<col width="50">
-				<col>
-				<col width="9%">
-				<col width="9%">
-				<col width="9%">
-				<col width="9%">
-				<col width="9%">
-				<col width="15%">
-		    </colgroup>
-		    <thead>
-				<tr>
-					<th><input type="checkbox" name="" lay-skin="primary" lay-filter="allChoose" id="allChoose"></th>
-					<th style="text-align:left;">文章标题</th>
-					<th>发布人</th>
-					<th>审核状态</th>
-					<th>浏览权限</th>
-					<th>是否展示</th>
-					<th>发布时间</th>
-					<th>操作</th>
-				</tr> 
-		    </thead>
-		    <tbody class="news_content"></tbody>
+<body class="childrenBody" style="overflow: hidden">
+<div class="layui-form">
+	<form class="layui-form" action="#" style="margin:10px">
+
+		<div class="layui-fluid">
+			<div class="layui-row layui-col-space5">
+				<div class="layui-col-md6">
+					<label class="layui-form-label">商品名称:</label>
+					<div class="layui-input-inline">
+						<input type="text" id="goodsName" autocomplete="off" class="layui-input">
+					</div>
+				</div>
+				<div class="layui-col-md6">
+					<label class="layui-form-label">品牌:</label>
+					<div class="layui-input-inline">
+						<select name="suppcompany" id="suppcompany">
+							<option value="">全部</option>
+							<option value="施乐">施乐</option>
+							<option value="理光">理光</option>
+							<option value="夏普">夏普</option>
+							<option value="东芝">东芝</option>
+							<option value="其它">其它</option>
+						</select>
+					</div>
+				</div>
+			</div>
+
+			<div class="layui-row layui-col-space5">
+				<div class="layui-col-md12">
+					<label class="layui-form-label">功能:</label>
+					<div class="layui-input-inline">
+						<input type="checkbox" name="goodsprop" value="1" class="" title="WIFI">
+						<input type="checkbox" name="goodsprop" value="2" class="" title="双面">
+						<input type="checkbox" name="goodsprop" value="4" class="" title="USB">
+						<input type="checkbox" name="goodsprop" value="8" class="" title="彩色">
+						<input type="checkbox" name="goodsprop" value="16" class="" title="复印">
+					</div>
+				</div>
+			</div>
+
+			<div class="layui-fluid">
+				<div class="layui-row  layui-col-space2">
+					<div class="layui-row" style="text-align: center">
+
+						<a type="button" data-type="reload" class="layui-btn" lay-submit lay-filter="btngoodsearch">查询</a>
+
+					</div>
+				</div>
+			</div>
+	</form>
+</div>
+<div>
+	<hr/>
+</div>
+<div class="layui-form news_list">
+
+	<div class="layui-btn-group demoTable">
+		<a type="button" class="layui-btn" lay-submit lay-filter="addgoods">新增</a>
+		<a type="button" class="layui-btn" lay-submit lay-filter="setgoods">修改</a>
+		<a type="button" class="layui-btn" lay-submit lay-filter="delgoods">删除</a>
+	</div>
+</div>
+<fieldset class="layui-elem-field">
+	<div class="layui-field-box layui-form" style="margin: 0px;padding: 2px" >
+		<table class="layui-table admin-table" id="goodstableinfo" style="margin:0px" lay-filter="newstable">
+
 		</table>
 	</div>
-	<div id="page"></div>
-	<script type="text/javascript" src="../../layui/layui.js"></script>
-	<script type="text/javascript" src="newsList.js"></script>
+</fieldset>
+
+<script type="text/javascript" src="../../layui/layui.js"></script>
+<script type="text/javascript" src="../../js/config.js"></script>
+<script type="text/javascript" src="newsList.js"></script>
+<script type="text/javascript" src="../../js/mypage.js"></script>
+<script type="text/html" id="barDemo">
+	<a class="layui-btn layui-btn-xs" lay-event="photo">相册</a>
+	<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="detail">详情</a>
+</script>
 </body>
 </html>

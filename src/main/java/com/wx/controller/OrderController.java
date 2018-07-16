@@ -25,6 +25,9 @@ import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -48,33 +51,52 @@ public class OrderController {
     @ApiParam(name = "orderObj", value = "下订单", required = true)
     @LoginRequired
     @PostMapping(value = "addOrder")
-    public ProjectResult addOrder(@RequestBody OrderSet orderSetObj) throws Exception{
+    public ProjectResult addOrder(@RequestBody OrderSet orderSetObj, HttpServletRequest request) throws Exception {
         ProjectResult res = new ProjectResult();
 
         OrderObj orderObj = new OrderObj();
         ArrayList<OrderGoodsObj> orderGoodsObjs = new ArrayList<OrderGoodsObj>();
         orderObj.setAddressid(orderSetObj.getAddressID());
-        orderObj.setUserid(10);
+        HttpSession seesionTemp = request.getSession();
+        UserObj userObj = (UserObj) seesionTemp.getAttribute("loginUser");
+        if (userObj == null) {
+            res.setnStatus(ProjectResult.nStatusError);
+            res.setSzError("个人信息丢失，请重新登录");
+            return res;
+        }
+        orderObj.setUserid(userObj.getUserid());
         Date dayNow = new Date();
-       // orderObj.setOrdertime(dayNow);
+
+        orderObj.setOrdertime(dayNow);
         orderObj.setPaytype(1);//微信支付
         orderObj.setOrderstatus(1);//下单成功
 
         Integer nTotalPrice = 0;
         OrderGoodsObj[] orderGoodsObs = orderSetObj.getOrderGoodsObjs();
         if (orderGoodsObs != null && orderGoodsObs.length > 0) {
-            for (Integer i = 0; i <  orderGoodsObs.length; i++) {
+            for (Integer i = 0; i < orderGoodsObs.length; i++) {
                 nTotalPrice = nTotalPrice + orderGoodsObs[i].getGoodsprice() * orderGoodsObs[i].getGoodsnum();
                 boolean bRes = orderGoodsObjs.add(orderGoodsObs[i]);
             }
         }
-        if (!nTotalPrice.equals( orderSetObj.getTotalSum())) {
+        if (!nTotalPrice.equals(orderSetObj.getTotalSum())) {
             res.setnStatus(ProjectResult.nStatusError);
             res.setSzError("总金额累加不正确");
             return res;
         }
         orderObj.setTotalsum(nTotalPrice);
-        orderService.addOrder(orderObj,orderGoodsObjs);
+        orderObj.setMemo(userObj.getExtname()+orderGoodsObjs.get(0).getGoodsid());
+        Integer orderID = orderService.addOrder(orderObj, orderGoodsObjs);
+        if (orderID == 0 || orderID < 0) {
+            res.setnStatus(ProjectResult.nStatusError);
+        } else {
+            List<OrderGoodsObj> orderGoodsObjList1 = orderDetailService.select(orderID);
+            if (orderGoodsObjList1.size() == 1) {
+                OrderGoodsObj temp = new OrderGoodsObj();
+                temp = orderGoodsObjList1.get(0);
+                res.setData(temp);
+            }
+        }
         return res;
     }
 
@@ -93,7 +115,6 @@ public class OrderController {
     @PostMapping(value = "getOrder")
     @ApiParam(name = "orderObj", value = "下订单", required = true)
     public ProjectResult getOrder(@RequestBody OrderReq orderReq) throws Exception{
-
         ProjectResult res = new ProjectResult();
         PagesOrder pagesOrder = orderReq.getPageNum();
         if (pagesOrder == null) {
@@ -126,20 +147,16 @@ public class OrderController {
             orderDetailObj.setPaytype(temp.getPaytype());
             orderDetailObj.setOrderstatus(temp.getOrderstatus());
             orderDetailObj.setMemo(temp.getMemo());
-
             //用户信息
             Integer nUserID = temp.getUserid();
             UserObj userTemp = new UserObj();
             userTemp.setUserid(nUserID);
             List<UserObj> userObjTemp = userService.getUsers(userTemp);
             orderDetailObj.setUserObj(userObjTemp.get(0));
-
             //地址信息
             orderDetailObj.setAddressObj(addressService.selectByID(temp.getAddressid()));
-
             //订单商品详细信息
             orderDetailObj.setOrderGoodsObjList(orderDetailService.select(temp.getOrderid()));
-
             orderDetailObjs.add(orderDetailObj);
         }
         res.setData(orderDetailObjs);
@@ -149,7 +166,7 @@ public class OrderController {
     @ApiOperation(value="设置发货状态", notes="设置发货状态")
     @PostMapping(value = "setSend")
     public ProjectResult setSend(@RequestParam("orderID") Integer nOrderID) throws Exception {
-        Integer nSend = 2;
+        Integer nSend = 4;
         ProjectResult res = new ProjectResult();
         if(orderService.setStatus(nSend, nOrderID)==true)
         {
@@ -160,7 +177,7 @@ public class OrderController {
     @ApiOperation(value="设置未发货状态", notes="设置未发货状态")
     @PostMapping(value = "setNoSend")
     public ProjectResult setNoSend(@RequestParam("orderID") Integer nOrderID) throws Exception{
-        Integer nSend = 1;
+        Integer nSend = 2;
         ProjectResult res = new ProjectResult();
         if(orderService.setStatus(nSend, nOrderID)==true)
         {

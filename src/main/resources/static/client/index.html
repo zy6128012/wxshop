@@ -25,20 +25,24 @@
 <body ontouchstart>
 <!--顶部搜索-->
 <header class='weui-header'>
-  <div class="weui-search-bar" id="searchBar">
-    <form class="weui-search-bar__form">
-      <div class="weui-search-bar__box">
-        <i class="weui-icon-search"></i>
-        <input type="search" class="weui-search-bar__input" id="searchInput" placeholder="搜索您想要的商品" required>
-        <a href="javascript:" class="weui-icon-clear" id="searchClear"></a>
-      </div>
-      <label class="weui-search-bar__label" id="searchText" style="transform-origin: 0px 0px 0px; opacity: 1; transform: scale(1, 1);">
-        <i class="weui-icon-search"></i>
-        <span>搜索您想要的商品</span>
-      </label>
-    </form>
-    <a href="javascript:" class="weui-search-bar__cancel-btn" id="searchCancel">取消</a>
-  </div>
+  <!--
+ <div class="weui-search-bar" id="searchBar">
+
+   <form class="weui-search-bar__form">
+
+     <div class="weui-search-bar__box">
+       <i class="weui-icon-search"></i>
+       <input type="search" class="weui-search-bar__input" id="searchInput" placeholder="搜索您想要的商品" required>
+       <a href="javascript:" class="weui-icon-clear" id="searchClear"></a>
+     </div>
+     <label class="weui-search-bar__label" id="searchText" style="transform-origin: 0px 0px 0px; opacity: 1; transform: scale(1, 1);">
+       <i class="weui-icon-search"></i>
+       <span>搜1索您想要的商品</span>
+     </label>
+   </form>
+   <a href="javascript:" class="weui-search-bar__cancel-btn" id="searchCancel">取消</a>
+ </div>
+ -->
 </header>
 <!--主体-->
 <div class='weui-content'>
@@ -85,7 +89,7 @@
                   <div class="weui-cells weui-cells_checkbox">
                     <label class="weui-cell weui-check__label select_label">
                       <div class="weui-cell__hd">
-                        <input type="radio" class="weui-check" name="buy_type" value="1" checked="checked" />
+                        <input type="radio" class="weui-check" id="chk1" name="buy_type" value="1" />
                         <i class="weui-icon-checked"></i>
                       </div>
                       <div class="weui-cell__bd">
@@ -94,7 +98,7 @@
                     </label>
                     <label class="weui-cell weui-check__label select_label">
                       <div class="weui-cell__hd">
-                        <input type="radio" class="weui-check" name="buy_type" value="2" id="buytype" />
+                        <input type="radio" class="weui-check" id="chk2" name="buy_type" value="2" id="buytype" />
                         <i class="weui-icon-checked"></i>
                       </div>
                       <div class="weui-cell__bd">
@@ -108,9 +112,10 @@
                 <div class="weui-cell__hd"><label class="weui-label wy-lab">幅面大小：</label></div>
                 <div class="weui-cell__bd">
                   <div class="weui-cells weui-cells_checkbox">
+
                     <label class="weui-cell weui-check__label select_label">
                       <div class="weui-cell__hd">
-                        <input type="radio" class="weui-check" name="pagesize" value="1" checked="checked">
+                        <input type="radio" class="weui-check" id="chk3" name="pagesize" value="1">
                         <i class="weui-icon-checked"></i>
                       </div>
                       <div class="weui-cell__bd">
@@ -119,7 +124,7 @@
                     </label>
                     <label class="weui-cell weui-check__label select_label">
                       <div class="weui-cell__hd">
-                        <input type="radio" class="weui-check" name="pagesize" value="2" >
+                        <input type="radio" class="weui-check" id="chk4" name="pagesize" value="2" >
                         <i class="weui-icon-checked"></i>
                       </div>
                       <div class="weui-cell__bd">
@@ -193,7 +198,7 @@
 <script src="lib/fastclick.js"></script> 
 <script>
   $(function() {
-    FastClick.attach(document.body);
+      FastClick.attach(document.body);
 
       $.ajax({
           type: 'POST'
@@ -203,7 +208,7 @@
           , contentType: "application/json"
           , success: function (res) {
 
-              alert(res.data.wxid+res.data.username);
+              //alert(res.data.wxid+res.data.username);
           }
       });
 

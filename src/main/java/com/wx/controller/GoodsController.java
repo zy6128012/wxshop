@@ -34,17 +34,24 @@ public class GoodsController {
 
     @ApiOperation(value = "获取商品信息接口", notes = "获取商品信息接口描述")
     @ApiParam(name = "goods", value = "商品类", required = true)
+    @ResponseBody
     @PostMapping(value = "getGoods")
     public ProjectResult getGoods(@RequestBody GoodsReq goodsReq) {
         ProjectResult res = new ProjectResult();
         PagesOrder pagesOrder = goodsReq.getPageNum();
+        if (goodsReq.getPaperSize() ==null||goodsReq.getPaperSize()== 0) {
+            goodsReq.setPaperSize(null);
+        }
+        if (goodsReq.getBuyType()==null||goodsReq.getBuyType() == 0) {
+            goodsReq.setBuyType(null);
+        }
         if (pagesOrder == null) {
             pagesOrder = new PagesOrder();
         }
         if (pagesOrder != null) {
             PageHelper.startPage(pagesOrder.getPages(), pagesOrder.getPageNum());
         }
-        List<GoodsObj> goodsObjs= goodsServie.select(goodsReq);
+        List<GoodsObj> goodsObjs = goodsServie.select(goodsReq);
         if (pagesOrder != null) {
             PageHelper.startPage(pagesOrder.getPages(), pagesOrder.getPageNum());
         }

@@ -7,16 +7,12 @@ server:
 app:
    ip: 127.0.0.1
 
-# 测试账号
-pay:
-  wxpay:
-     appID: wxab8acb865bb1637e
-     mchID: 11473623
-     key: 2ab9071b06b9f739b950ddb41db2690d
-     sandboxKey: 3639bc1370e105aa65f10cd4fef2a3ef
-     certPath: /var/local/cert/apiclient_cert.p12
-     notifyUrl: http://65ta5j.natappfree.cc/wxpay/refund/notify
-     useSandbox: true
+wechat:
+  mpAppId: wx83d3b03875550c6f
+  mchId: 1504320481
+  mchKey: sun13954825807tianzhangkuaixian0
+  keyPath: c:/wxshop/apiclient_cert.p12
+  notifyUrl: http://wxshop.windtp.cn/pay/notify
 
 spring:
   thymeleaf:
@@ -59,3 +55,7 @@ pagehelper:
     reasonable: true
     supportMethodsArguments: true
     params: count=countSql
+logging:
+  level:
+    root: info
+    com.wx.mapper: debug
