@@ -31,8 +31,12 @@
 		<h1></h1>
 <input type="hidden" id="id" name="id">
 		<input type="hidden" id="type" name="type">
+		<div style="margin: 10px auto;text-align: center" id="titlediv">
+			新闻标题:<input type="text" id="title" name="title" style="width: 450px"></input>
+		</div>
 		<script id="editor" name="editor" type="text/plain" style="width:100;height:400px;"></script>
 	</div>
+
 <div style="margin: 5px auto;text-align: center">
 	<input type="submit" class="btn btn-primary" id="submit" value="提交"></input>
 	</div>
@@ -91,9 +95,37 @@
     }
     $(document).ready(function() {
        $("#id").val(getParam("id"));
-        $("#type").val(getParam("type"));
+        var vType=getParam("type");
+        $("#type").val(vType);
+		if(vType!="news")
+		{
+			$("#titlediv").css("display","none");
+		}
+if(vType=="shopinfo")
+	{
+        var vget={};
+        $.ajax({
+            type: 'GET'
+            , url: '/shopinfo/getAboutus'
+            , dataType: 'json'
+            , contentType: "application/json"
+            , success: function (res) {
+                if (res.nStatus == 0) {
 
-        var vget={goodsID: getParam("id")};
+                    var vdata = res.data;
+					if(vdata==null||vdata==undefined){
+						return;
+					}
+                    var ueditor = UE.getEditor('editor');
+                    ueditor.ready(function() {
+                            UE.getEditor('editor').setContent(vdata.contant);
+                    });
+                }
+            }
+        });
+	}
+	else{
+		var vget={goodsID: getParam("id")};
         $.ajax({
             type: 'POST'
             , url: '/goods/getGoods'
@@ -113,13 +145,12 @@
                     else if(vType=="detail")
                     {
                         UE.getEditor('editor').setContent(vgoods.goodintro);
-
                     }
                     });
            		 }
 			}
         });
-
+}
 
         $("form").submit(function(e) {
              var vdata=$("form").serialize();

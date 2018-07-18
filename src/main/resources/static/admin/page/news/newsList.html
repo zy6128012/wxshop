@@ -15,54 +15,7 @@
 </head>
 <body class="childrenBody" style="overflow: hidden">
 <div class="layui-form">
-	<form class="layui-form" action="#" style="margin:10px">
 
-		<div class="layui-fluid">
-			<div class="layui-row layui-col-space5">
-				<div class="layui-col-md6">
-					<label class="layui-form-label">商品名称:</label>
-					<div class="layui-input-inline">
-						<input type="text" id="goodsName" autocomplete="off" class="layui-input">
-					</div>
-				</div>
-				<div class="layui-col-md6">
-					<label class="layui-form-label">品牌:</label>
-					<div class="layui-input-inline">
-						<select name="suppcompany" id="suppcompany">
-							<option value="">全部</option>
-							<option value="施乐">施乐</option>
-							<option value="理光">理光</option>
-							<option value="夏普">夏普</option>
-							<option value="东芝">东芝</option>
-							<option value="其它">其它</option>
-						</select>
-					</div>
-				</div>
-			</div>
-
-			<div class="layui-row layui-col-space5">
-				<div class="layui-col-md12">
-					<label class="layui-form-label">功能:</label>
-					<div class="layui-input-inline">
-						<input type="checkbox" name="goodsprop" value="1" class="" title="WIFI">
-						<input type="checkbox" name="goodsprop" value="2" class="" title="双面">
-						<input type="checkbox" name="goodsprop" value="4" class="" title="USB">
-						<input type="checkbox" name="goodsprop" value="8" class="" title="彩色">
-						<input type="checkbox" name="goodsprop" value="16" class="" title="复印">
-					</div>
-				</div>
-			</div>
-
-			<div class="layui-fluid">
-				<div class="layui-row  layui-col-space2">
-					<div class="layui-row" style="text-align: center">
-
-						<a type="button" data-type="reload" class="layui-btn" lay-submit lay-filter="btngoodsearch">查询</a>
-
-					</div>
-				</div>
-			</div>
-	</form>
 </div>
 <div>
 	<hr/>
@@ -71,13 +24,12 @@
 
 	<div class="layui-btn-group demoTable">
 		<a type="button" class="layui-btn" lay-submit lay-filter="addgoods">新增</a>
-		<a type="button" class="layui-btn" lay-submit lay-filter="setgoods">修改</a>
 		<a type="button" class="layui-btn" lay-submit lay-filter="delgoods">删除</a>
 	</div>
 </div>
 <fieldset class="layui-elem-field">
 	<div class="layui-field-box layui-form" style="margin: 0px;padding: 2px" >
-		<table class="layui-table admin-table" id="goodstableinfo" style="margin:0px" lay-filter="newstable">
+		<table class="layui-table admin-table" id="newstableinfo" style="margin:0px" lay-filter="newstable">
 
 		</table>
 	</div>

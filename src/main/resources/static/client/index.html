@@ -60,7 +60,7 @@
   <div class="weui-flex wy-iconlist-box">
     <div class="weui-flex__item"><a href="pro_list.html?buytype=1" class="wy-links-iconlist"><div class="img"><img src="images/copymont.png"></div><p>包月随便印</p></a></div>
     <div class="weui-flex__item"><a href="pro_list.html?buytype=2" class="wy-links-iconlist"><div class="img"><img src="images/copybuy.png"></div><p>购机随便印</p></a></div>
-    <div class="weui-flex__item"><a href="all_orders.html" class="wy-links-iconlist"><div class="img"><img src="images/soceshop.png"></div><p>积分商城</p></a></div>
+    <div class="weui-flex__item"><a href="scorepro_list.html" class="wy-links-iconlist"><div class="img"><img src="images/soceshop.png"></div><p>积分商城</p></a></div>
     <div class="weui-flex__item"><a href="Settled_in.html" class="wy-links-iconlist"><div class="img"><img src="images/aboutus.png"></div><p>了解我们</p></a></div>
   </div>
   <!--新闻切换-->
@@ -68,7 +68,7 @@
     <i class="news-icon-laba"></i>
     <div class="swiper-container swiper-news">
       <div class="swiper-wrapper">
-        <div class="swiper-slide"><a href="news_info.html">微信商城正式上线</a></div>
+        <div class="swiper-slide"><a href="#" id="news"></a></div>
       </div>
       <div class="swiper-pagination"></div>
     </div>
@@ -211,7 +211,24 @@
               //alert(res.data.wxid+res.data.username);
           }
       });
+      $.ajax({
+          type: 'POST'
+          , url: '/news/getNews'
+          , data: null
+          , dataType: 'json'
+          , contentType: "application/json"
+          , success: function (res) {
+              if (res.nStatus == 0) {
+                  var vdata = res.data;
+                  if (vdata.length > 0) {
+                      $("#news").html(vdata[0].newtitle);
+                      $("#news").attr("href", "news_info.html?id=" + vdata[0].newid);
+                  }
+              }
 
+
+          }
+      });
   });
 </script> 
 <script src="js/jquery-weui.js"></script>

@@ -33,7 +33,7 @@ layui.config({
             buyprice:vPrice,
             goodsprop:vgoodsprop,
             buytype:vbuytype,
-            usetype:1,
+            usetype:2,
             papersize:vpapersize,
             goodsstock:$("#goodsstock").val(),
             goodsstatue:vgoodsstatue

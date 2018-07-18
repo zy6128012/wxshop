@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>文章添加--layui后台管理模板</title>
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="format-detection" content="telephone=no">
+	<link rel="stylesheet" href="../../layui/css/layui.css" media="all" />
+</head>
+<body class="childrenBody">
+	<form class="layui-form" id="addgoodform">
+		<input type="hidden" id="goodsid" value="0">
+		<div class="layui-form-item">
+		<div class="layui-inline">
+			<label class="layui-form-label">名称:</label>
+			<div class="layui-input-inline">
+				<input type="text" id="goodsname" class="layui-input" lay-verify="required" placeholder="请输入名称">
+			</div>
+		</div>
+		<div class="layui-inline">
+			<label class="layui-form-label">购买日期:</label>
+			<div class="layui-input-inline">
+				<input type="text" name="date" id="buydate" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+			</div>
+		</div>
+		</div>
+
+
+		<div class="layui-form-item">
+		<div class="layui-inline">
+			<label class="layui-form-label">积分:</label>
+			<div class="layui-input-inline">
+				<input type="text" name="buyprice" id="buyprice" placeholder="积分" autocomplete="off" class="layui-input" lay-verify="number">
+			</div>
+		</div>
+			<div class="layui-inline">
+				<label class="layui-form-label">库存数:</label>
+				<div class="layui-input-block">
+					<input type="text" name="goodsstock" id="goodsstock" autocomplete="off" class="layui-input" lay-verify="number" value="0">
+				</div>
+			</div>
+		</div>
+
+
+		</div>
+		<div class="layui-form-item">
+		<div class="layui-inline">
+			<label class="layui-form-label">是否开放:</label>
+			<div class="layui-input-block">
+				<input type="checkbox" name="goodsstatue" id="goodsstatue" value="1" lay-skin="switch" lay-text="ON|OFF">
+			</div>
+		</div>
+		</div>
+
+
+		</div>
+
+		<div class="layui-form-item" style="margin-top:25px;text-align: center;">
+			<div class="layui-inline">
+				<button class="layui-btn" lay-submit="" lay-filter="setgoods">提交</button>
+				<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+		    </div>
+		</div>
+	</form>
+	<script type="text/javascript" src="../../layui/layui.js"></script>
+	<script type="text/javascript" src="set.js"></script>
+	<script type="text/javascript" src="../../js/config.js"></script>
+</body>
+</html>

@@ -14,6 +14,7 @@
     <result column="GoodsProp" property="goodsprop" jdbcType="INTEGER" />
     <result column="GoodsStatue" property="goodsstatue" jdbcType="INTEGER" />
     <result column="GoodsStock" property="goodsstock" jdbcType="INTEGER" />
+    <result column="GoodIntro" property="goodintro" jdbcType="LONGVARCHAR" />
     <result column="BuyDate" property="buydate" jdbcType="INTEGER" />
     <result column="GoodsImgUrl" property="goodsimgurl" jdbcType="VARCHAR" />
     <result column="Memo" property="memo" jdbcType="VARCHAR" />
@@ -89,12 +90,12 @@
       SuppCompany, Model,BuyPrice, PaperSize,
       PaperColor, UseType, GoodsProp, 
       GoodsStatue, GoodsStock, BuyDate, 
-      GoodsImgUrl, Memo, GoodIntro,Model
+      GoodsImgUrl, Memo, GoodIntro
       )
     values (#{goodsid,jdbcType=INTEGER}, #{goodsname,jdbcType=VARCHAR}, #{buytype,jdbcType=INTEGER}, 
       #{suppcompany,jdbcType=VARCHAR},#{model,jdbcType=VARCHAR}, #{buyprice,jdbcType=INTEGER}, #{papersize,jdbcType=INTEGER},
       #{papercolor,jdbcType=INTEGER}, #{usetype,jdbcType=INTEGER}, #{goodsprop,jdbcType=INTEGER}, 
-      #{goodsstatue,jdbcType=INTEGER}, #{goodsstock,jdbcType=INTEGER}, #{buydate,jdbcType=INTEGER}, 
+      #{goodsstatue,jdbcType=INTEGER}, #{goodsstock,jdbcType=INTEGER}, #{buydate,jdbcType=INTEGER},
       #{goodsimgurl,jdbcType=VARCHAR}, #{memo,jdbcType=VARCHAR}, #{goodintro,jdbcType=LONGVARCHAR}
       )
     <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="goodsid">
