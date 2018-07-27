@@ -3,28 +3,18 @@ package com.wx.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.wx.comClass.LoginRequired;
 import com.wx.comClass.PagesOrder;
-import com.wx.comClass.ResClass;
-import com.wx.datareq.AdminGetReq;
-import com.wx.datareq.AdminLoginReq;
 import com.wx.datareq.ScoreReq;
-import com.wx.datareq.SetPassword;
-import com.wx.dto.AdminObj;
 import com.wx.dto.ScoreObj;
 import com.wx.dto.UserObj;
-import com.wx.mapper.AdminObjMapper;
 import com.wx.mapper.ScoreObjMapper;
 import com.wx.result.ProjectResult;
-import com.wx.service.AdminService;
 import com.wx.service.ScoreService;
 import com.wx.service.UserService;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController

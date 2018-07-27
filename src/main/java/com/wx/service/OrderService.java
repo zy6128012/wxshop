@@ -52,6 +52,7 @@ public class OrderService {
                             OrderGoodsObj temp = new OrderGoodsObj();
                             temp = orderGoodsObjs.get(i);
                             temp.setOrdergoodsid(norderID);
+
                             Integer nOrderGoodsRes = orderGoodsObjMapper.insertSelective(temp);
                             if (nOrderGoodsRes < 1) {
                                 return 0;

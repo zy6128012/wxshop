@@ -27,7 +27,8 @@ var comjsthis = (function(){
             return "";
         };
         _this.price = function (data) {
-            if(data<=1)
+
+            if(data<=100)
             {
                 return data/100;
             }

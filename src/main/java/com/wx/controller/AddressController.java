@@ -7,6 +7,7 @@ package com.wx.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.wx.comClass.LoginRequired;
 import com.wx.dto.AddressObj;
+import com.wx.dto.UserObj;
 import com.wx.mapper.AddressObjMapper;
 import com.wx.result.ProjectResult;
 import com.wx.service.AddressService;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,8 +38,9 @@ public class AddressController {
     @ApiParam(name = "addressObj", value = "个人的通讯地址", required = true)
     @LoginRequired
     @PostMapping(value = "addAddress")
-    public ProjectResult addAddress(@RequestBody AddressObj addressObj) {
+    public ProjectResult addAddress(@RequestBody AddressObj addressObj, HttpServletRequest request) {
         ProjectResult res = new ProjectResult();
+        /*
         if (addressObj.getProvicename() == null || addressObj.getProvicename() == "") {
             res.setSzError("省信息不能为空");
             res.setnStatus(ProjectResult.nStatusError);
@@ -53,6 +56,7 @@ public class AddressController {
             res.setnStatus(ProjectResult.nStatusError);
             return res;
         }
+        */
         if (addressObj.getDetailaddress() == null || addressObj.getDetailaddress() == "") {
             res.setSzError("详细信息不能为空");
             res.setnStatus(ProjectResult.nStatusError);
@@ -63,11 +67,10 @@ public class AddressController {
             res.setnStatus(ProjectResult.nStatusError);
             return res;
         }
-        if (addressObj.getUserid() == null || addressObj.getUserid() == 0) {
-            res.setSzError("用户信息不能为空");
-            res.setnStatus(ProjectResult.nStatusError);
-            return res;
-        }
+        HttpSession seesionTemp = request.getSession();
+        UserObj userObj = (UserObj) seesionTemp.getAttribute("loginUser");
+        addressObj.setUserid(userObj.getUserid());
+
         Integer nRes = addressService.add(addressObj);
         if (nRes > 0) {
             res.setnStatus(ProjectResult.nStatusSuccess);
@@ -82,10 +85,12 @@ public class AddressController {
     @ApiParam(name = "getAddress", value = "个人的通讯地址", required = true)
     @LoginRequired
     @GetMapping(value = "getAddress")
-    public ProjectResult getAddress() {
+    public ProjectResult getAddress(HttpServletRequest request) {
         ProjectResult res = new ProjectResult();
+        HttpSession seesionTemp = request.getSession();
+        UserObj userObj = (UserObj) seesionTemp.getAttribute("loginUser");
 
-        List<AddressObj> addList= addressService.selectByUserID(10);
+        List<AddressObj> addList= addressService.selectByUserID(userObj.getUserid());
         if (addList.size() > 0) {
             res.setData(addList);
             res.setCount(addList.size());

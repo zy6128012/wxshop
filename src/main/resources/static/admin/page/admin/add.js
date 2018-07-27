@@ -9,7 +9,7 @@ layui.config({
         $ = layui.jquery;
 
     //创建一个编辑器
-    var editIndex = layedit.build('news_content');
+    var editIndex = layedit.build('_content');
     var addNewsArray = [],addNews;
     form.on("submit(addadmin)",function(data){
         var vParar={

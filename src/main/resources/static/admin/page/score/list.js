@@ -33,11 +33,11 @@ layui.use(['table','form','jquery','laydate'], function() {
                 var scoretype = d.scoretype;
                 if(scoretype=="1")
                 {
-                    return "分享";
+                    return "购买";
                 }
                 if(scoretype=="2")
                 {
-                    return "购买";
+                    return "分享";
                 }
                 return "其他";
             }}
