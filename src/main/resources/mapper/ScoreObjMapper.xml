@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wx.mapper.ScoreObjMapper" >
+  <resultMap id="BaseResultMap" type="com.wx.dto.ScoreObj" >
+    <id column="ScoreID" property="scoreid" jdbcType="INTEGER" />
+    <result column="UserID" property="userid" jdbcType="INTEGER" />
+    <result column="ScoreType" property="scoretype" jdbcType="INTEGER" />
+    <result column="ScoreValue" property="scorevalue" jdbcType="INTEGER" />
+    <result column="ScoreTime" property="scoretime" jdbcType="TIMESTAMP" />
+    <result column="ScoreDate" property="scoredate" jdbcType="INTEGER" />
+    <result column="Memo" property="memo" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ScoreID, UserID, ScoreType, ScoreValue, ScoreTime, ScoreDate, Memo
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from score
+    where ScoreID = #{scoreid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from score
+    where ScoreID = #{scoreid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.wx.dto.ScoreObj" >
+    insert into score (ScoreID, UserID, ScoreType, 
+      ScoreValue, ScoreTime, ScoreDate, 
+      Memo)
+    values (#{scoreid,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, #{scoretype,jdbcType=INTEGER}, 
+      #{scorevalue,jdbcType=INTEGER}, #{scoretime,jdbcType=TIMESTAMP}, #{scoredate,jdbcType=INTEGER}, 
+      #{memo,jdbcType=VARCHAR})
+  </insert>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.wx.datareq.ScoreReq" >
+    select *
+    from score
+    <where>
+      <if test="userID!=null">
+        AND UserID = #{userID}
+      </if>
+      <if test="scoreDate!=null">
+        AND ScoreDate = #{scoreDate}
+      </if>
+      <if test="scoreType!=null">
+        AND ScoreType = #{scoreType}
+      </if>
+    </where>
+  </select>
+  <insert id="insertSelective" parameterType="com.wx.dto.ScoreObj" >
+    insert into score
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="scoreid != null" >
+        ScoreID,
+      </if>
+      <if test="userid != null" >
+        UserID,
+      </if>
+      <if test="scoretype != null" >
+        ScoreType,
+      </if>
+      <if test="scorevalue != null" >
+        ScoreValue,
+      </if>
+      <if test="scoretime != null" >
+        ScoreTime,
+      </if>
+      <if test="scoredate != null" >
+        ScoreDate,
+      </if>
+      <if test="memo != null" >
+        Memo,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="scoreid != null" >
+        #{scoreid,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="scoretype != null" >
+        #{scoretype,jdbcType=INTEGER},
+      </if>
+      <if test="scorevalue != null" >
+        #{scorevalue,jdbcType=INTEGER},
+      </if>
+      <if test="scoretime != null" >
+        #{scoretime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="scoredate != null" >
+        #{scoredate,jdbcType=INTEGER},
+      </if>
+      <if test="memo != null" >
+        #{memo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wx.dto.ScoreObj" >
+    update score
+    <set >
+      <if test="userid != null" >
+        UserID = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="scoretype != null" >
+        ScoreType = #{scoretype,jdbcType=INTEGER},
+      </if>
+      <if test="scorevalue != null" >
+        ScoreValue = #{scorevalue,jdbcType=INTEGER},
+      </if>
+      <if test="scoretime != null" >
+        ScoreTime = #{scoretime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="scoredate != null" >
+        ScoreDate = #{scoredate,jdbcType=INTEGER},
+      </if>
+      <if test="memo != null" >
+        Memo = #{memo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ScoreID = #{scoreid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wx.dto.ScoreObj" >
+    update score
+    set UserID = #{userid,jdbcType=INTEGER},
+      ScoreType = #{scoretype,jdbcType=INTEGER},
+      ScoreValue = #{scorevalue,jdbcType=INTEGER},
+      ScoreTime = #{scoretime,jdbcType=TIMESTAMP},
+      ScoreDate = #{scoredate,jdbcType=INTEGER},
+      Memo = #{memo,jdbcType=VARCHAR}
+    where ScoreID = #{scoreid,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,201 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>会员中心</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<meta name="description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.
+">
+<link rel="stylesheet" href="lib/weui.min.css">
+<link rel="stylesheet" href="css/jquery-weui.css">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body ontouchstart>
+<!--主体-->
+<div class='weui-content'>
+  <div class="wy-center-top">
+    <div class="weui-media-box weui-media-box_appmsg">
+      <div class="weui-media-box__hd"><img class="weui-media-box__thumb radius" src="upload/headimg.jpg" alt=""></div>
+      <div class="weui-media-box__bd">
+        <h4 class="weui-media-box__title user-name"></h4>
+        <p class="user-grade" id="userlevel"></p>
+
+      </div>
+    </div>
+<!--    <div class="xx-menu weui-flex">
+      <div class="weui-flex__item"><div class="xx-menu-list"><em>987</em><p>账户余额</p></div></div>
+      <div class="weui-flex__item"><div class="xx-menu-list"><em>459</em><p>我的蓝豆</p></div></div>
+      <div class="weui-flex__item"><div class="xx-menu-list"><em>4</em><p>收藏商品</p></div></div>
+    </div>-->
+  </div>
+  <div class="weui-panel weui-panel_access">
+    <div class="weui-panel__hd">
+      <a href="all_orders.html" class="weui-cell weui-cell_access center-alloder">
+        <div class="weui-cell__bd wy-cell">
+          <div class="weui-cell__hd"><img src="images/center-icon-order-all.png" alt="" class="center-list-icon"></div>
+          <div class="weui-cell__bd weui-cell_primary"><p class="center-list-txt">全部订单</p></div>
+        </div>
+        <span class="weui-cell__ft"></span>
+      </a>   
+    </div>
+    <div class="weui-panel__bd">
+      <div class="weui-flex">
+        <div class="weui-flex__item">
+          <a href="all_orders.html?statue=1" class="center-ordersModule">
+            <span class="weui-badge" style="position: absolute;top:5px;right:20px; font-size:10px;" id="unpay"></span>
+            <div class="imgicon"><img src="images/center-icon-order-dfk.png" /></div>
+            <div class="name">待付款</div>
+          </a>
+        </div>
+        <div class="weui-flex__item">
+          <a href="all_orders.html?statue=2" class="center-ordersModule">
+            <span class="weui-badge" style="position: absolute;top:5px;right:20px; font-size:10px;" id="unsend"></span>
+            <div class="imgicon"><img src="images/center-icon-order-dfh.png" /></div>
+            <div class="name">待发货</div>
+          </a>
+        </div>
+        <div class="weui-flex__item">
+          <a href="all_orders.html" class="center-ordersModule">
+            <div class="imgicon"><img src="images/center-icon-order-dsh.png" /></div>
+            <div class="name">全部订单</div>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  
+  <div class="weui-panel weui-panel_access">
+    <div class="weui-panel__hd">
+      <a href="#" class="weui-cell weui-cell_access center-alloder">
+        <div class="weui-cell__bd wy-cell">
+          <div class="weui-cell__hd"><img src="images/center-icon-jk.png" alt="" class="center-list-icon"></div>
+          <div class="weui-cell__bd weui-cell_primary"><p class="center-list-txt">我的积分</p></div>
+        </div>
+        <span class="weui-cell__ft"></span>
+      </a>   
+    </div>
+    <div class="weui-panel__bd">
+      <div class="weui-flex">
+
+        <div class="weui-flex__item">
+          <a href="myburse.html" class="center-ordersModule">
+            <div class="center-money"><em id="myscore"></em></div>
+            <div class="name">积分</div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+  <div class="weui-panel">
+        <div class="weui-panel__bd">
+          <div class="weui-media-box weui-media-box_small-appmsg">
+            <div class="weui-cells">
+
+
+              <a class="weui-cell weui-cell_access" href="address_list.html">
+                <div class="weui-cell__hd"><img src="images/center-icon-dz.png" alt="" class="center-list-icon"></div>
+                <div class="weui-cell__bd weui-cell_primary">
+                  <p class="center-list-txt">地址管理</p>
+                </div>
+                <span class="weui-cell__ft"></span>
+              </a>
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+  
+  
+  
+</div>
+
+<!--底部导航-->
+<div class="foot-black"></div>
+<div class="weui-tabbar wy-foot-menu">
+  <a href="index.html" class="weui-tabbar__item weui-bar__item--on">
+    <div class="weui-tabbar__icon foot-menu-home"></div>
+    <p class="weui-tabbar__label">首页</p>
+  </a>
+  <a href="pro_list.html" class="weui-tabbar__item">
+    <div class="weui-tabbar__icon foot-menu-cart"></div>
+    <p class="weui-tabbar__label">设备</p>
+  </a>
+
+  <a href="mine.html" class="weui-tabbar__item">
+    <div class="weui-tabbar__icon foot-menu-member"></div>
+    <p class="weui-tabbar__label">我的</p>
+  </a>
+</div>
+
+<script src="lib/jquery-2.1.4.js"></script> 
+<script src="lib/fastclick.js"></script> 
+<script>
+  $(function() {
+    FastClick.attach(document.body);
+      $.ajax({
+          type: 'POST'
+          , url: '/user/getLoginUser'
+          , data: {}
+          , dataType: 'json'
+          , contentType: "application/json"
+          , success: function (res) {
+              var vdata = res.data;
+
+              if(vdata.usersocre==null||vdata.usersocre==""||vdata.usersocre<=100)
+              {
+                  $("#userlevel").html("等级：普通会员");
+              }
+              else if(vdata.usersocre>100)
+              {
+                  $("#userlevel").html("等级：高级会员");
+              }
+              $("#myscore").html(vdata.usersocre);
+          }
+      });
+      $.ajax({
+          type: 'POST'
+          , url: '/order/getOrderOnly'
+          , data: {}
+          , dataType: 'json'
+          , contentType: "application/json"
+          , success: function (res) {
+var vunpay=0;
+              var vunsend=0;
+              for (var i = 0; i < res.data.length; i++) {
+                  var temp=res.data[i];
+                  if(temp.orderstatus==1)
+                  {
+                      vunpay=vunpay+1;
+                  }
+                  else if(temp.orderstatus==2)
+                  {
+                      vunsend=vunsend+1;
+                  }
+              }
+              if(vunpay>0) {
+                  $("#unpay").html(vunpay);
+              }
+              else{
+                  $("#unpay").remove();
+              }
+              if(vunsend>0) {
+                  $("#unsend").html(vunsend);
+              }
+              else{
+                  $("#unsend").remove();
+              }
+          }
+      });
+  });
+</script> 
+<script src="js/jquery-weui.js"></script>
+<script type="javascript">
+
+</script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>回复咨询</title>
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="format-detection" content="telephone=no">
+	<link rel="stylesheet" href="../../layui/css/layui.css" media="all" />
+</head>
+<body class="childrenBody">
+<form class="layui-form" id="addadminform">
+	<div class="layui-form-item">
+		<div class="layui-inline">
+			<label class="layui-form-label">回复内容:</label>
+			<div class="layui-input-inline">
+
+				<textarea name="refContent" id="refContent" style="width: 350px" placeholder="请输入内容"  lay-verify="required" class="layui-textarea"></textarea>
+			</div>
+		</div>
+	</div>
+	<div class="layui-form-item" style="margin-top:25px;text-align: center;">
+		<div class="layui-inline">
+			<a class="layui-btn" lay-submit="" lay-filter="setbtn">提交</a>
+			<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+		</div>
+	</div>
+</form>
+<script type="text/javascript" src="../../layui/layui.js"></script>
+<script type="text/javascript" src="replay.js"></script>
+<script type="text/javascript" src="../../js/config.js"></script>
+</body>
+</html>

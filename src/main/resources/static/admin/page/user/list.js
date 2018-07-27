@@ -24,7 +24,7 @@ layui.use(['table','form','jquery','laydate'], function() {
             , {field: 'telphone', title: '电话'}
             , {field: 'wxbalance', title: '余额',templet: function(d){
                 return comjs.price(d.wxbalance);}}
-            , {field: 'wxbalance', title: '积分'}
+            , {field: 'usersocre', title: '积分'}
             , {field: 'createtime', title: '创建时间',templet: function(d){
             return comjs.getTime(d.createtime);}}
         ]]

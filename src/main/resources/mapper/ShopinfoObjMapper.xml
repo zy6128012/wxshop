@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wx.mapper.ShopinfoObjMapper" >
+  <resultMap id="BaseResultMap" type="com.wx.dto.ShopinfoObj" >
+    <id column="sid" property="sid" jdbcType="INTEGER" />
+    <result column="stitle" property="stitle" jdbcType="VARCHAR" />
+    <result column="stime" property="stime" jdbcType="TIMESTAMP" />
+    <result column="sdate" property="sdate" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="memo" property="memo" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.wx.dto.ShopinfoObj" extends="BaseResultMap" >
+    <result column="contant" property="contant" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    sid, stitle, stime, sdate, type, memo
+  </sql>
+  <sql id="Blob_Column_List" >
+    contant
+  </sql>
+  <select id="select" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from shopinfo
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from shopinfo
+    where sid = #{sid,jdbcType=INTEGER}
+  </select>
+  <select id="selectByType" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from shopinfo
+    where type = #{sid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from shopinfo
+    where type = #{sid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.wx.dto.ShopinfoObj" >
+    insert into shopinfo (sid, stitle, stime, 
+      sdate, type, memo, 
+      contant)
+    values (#{sid,jdbcType=INTEGER}, #{stitle,jdbcType=VARCHAR}, #{stime,jdbcType=TIMESTAMP}, 
+      #{sdate,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, #{memo,jdbcType=VARCHAR}, 
+      #{contant,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wx.dto.ShopinfoObj" >
+    insert into shopinfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sid != null" >
+        sid,
+      </if>
+      <if test="stitle != null" >
+        stitle,
+      </if>
+      <if test="stime != null" >
+        stime,
+      </if>
+      <if test="sdate != null" >
+        sdate,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="memo != null" >
+        memo,
+      </if>
+      <if test="contant != null" >
+        contant,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sid != null" >
+        #{sid,jdbcType=INTEGER},
+      </if>
+      <if test="stitle != null" >
+        #{stitle,jdbcType=VARCHAR},
+      </if>
+      <if test="stime != null" >
+        #{stime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sdate != null" >
+        #{sdate,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="memo != null" >
+        #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="contant != null" >
+        #{contant,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wx.dto.ShopinfoObj" >
+    update shopinfo
+    <set >
+      <if test="stitle != null" >
+        stitle = #{stitle,jdbcType=VARCHAR},
+      </if>
+      <if test="stime != null" >
+        stime = #{stime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sdate != null" >
+        sdate = #{sdate,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="memo != null" >
+        memo = #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="contant != null" >
+        contant = #{contant,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where sid = #{sid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.wx.dto.ShopinfoObj" >
+    update shopinfo
+    set stitle = #{stitle,jdbcType=VARCHAR},
+      stime = #{stime,jdbcType=TIMESTAMP},
+      sdate = #{sdate,jdbcType=INTEGER},
+      type = #{type,jdbcType=INTEGER},
+      memo = #{memo,jdbcType=VARCHAR},
+      contant = #{contant,jdbcType=LONGVARCHAR}
+    where sid = #{sid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wx.dto.ShopinfoObj" >
+    update shopinfo
+    set stitle = #{stitle,jdbcType=VARCHAR},
+      stime = #{stime,jdbcType=TIMESTAMP},
+      sdate = #{sdate,jdbcType=INTEGER},
+      type = #{type,jdbcType=INTEGER},
+      memo = #{memo,jdbcType=VARCHAR}
+    where sid = #{sid,jdbcType=INTEGER}
+  </update>
+</mapper>

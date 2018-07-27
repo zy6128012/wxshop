@@ -1,0 +1,251 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>产品详情</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<meta name="description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description">
+<link rel="stylesheet" href="lib/weui.min.css">
+<link rel="stylesheet" href="css/jquery-weui.css">
+<link rel="stylesheet" href="css/style.css">
+  <script src="../admin/js/config.js"></script>
+
+</head>
+<body ontouchstart>
+<!--主体-->
+<div class="weui-content">
+  <!--产品详情-->
+  <div class="weui-tab">
+    <div class="weui-navbar" style="position:fixed; top:0; left:0; right:0; height:44px;">
+      <a class="weui-navbar__item proinfo-tab-tit weui-bar__item--on" href="#tab1">商品</a>
+      <a class="weui-navbar__item proinfo-tab-tit" href="#tab2">详情</a>
+     <!-- <a class="weui-navbar__item proinfo-tab-tit" href="#tab3">评价</a>-->
+    </div>
+    <div class="weui-tab__bd proinfo-tab-con">
+      <div id="tab1" class="weui-tab__bd-item weui-tab__bd-item--active">
+        <!--主图轮播-->
+        <div class="swiper-container swiper-zhutu">
+          <div class="swiper-wrapper" id="goodimg" style="transition-duration: 0ms; transform: translate3d(0px, 0px, 0px);">
+
+          </div>
+          <div class="swiper-pagination swiper-zhutu-pagination"></div>
+        </div>
+        <div class="wy-media-box-nomg weui-media-box_text">
+          <h4 class="wy-media-box__title" id="goodname"></h4>
+          <div class="wy-pro-pri mg-tb-5">¥<em class="num font-20" id="goodprice"></em></div>
+
+        </div>
+
+      </div>
+      <div id="tab2" class="weui-tab__bd-item ">
+        <div class="pro-detail" id="detail">
+
+        </div>
+      </div>
+
+    </div>
+  </div>  
+</div>
+<span id="tophovertree" title="返回顶部"></span>
+<!--底部导航-->
+<div class="foot-black"></div>
+<div class="weui-tabbar wy-foot-menu">
+
+  <a href="javascript:;" class="weui-tabbar__item red-color open-popup" id="btnbuy">
+    <p class="promotion-foot-menu-label">立即购买</p>
+  </a>
+</div>
+<div id="join_cart" class='weui-popup__container popup-bottom' style="z-index:600;">
+  <div class="weui-popup__overlay" style="opacity:1;"></div>
+  <div class="weui-popup__modal">
+    <div class="modal-content">
+      <div class="weui-msg" style="padding-top:0;">
+        <div class="weui-msg__icon-area"><i class="weui-icon-success weui-icon_msg"></i></div>
+        <div class="weui-msg__text-area">
+          <h2 class="weui-msg__title">成功加入购物车</h2>
+          <p class="weui-msg__desc">亲爱的用户，您的商品已成功加入购物车，为了保证您的商品快速送达，请您尽快到购物车结算。</p>
+        </div>
+        <div class="weui-msg__opr-area">
+          <p class="weui-btn-area">
+            <a href="shopcart.html" class="weui-btn weui-btn_primary">去购物车结算</a>
+            <a href="javascript:;" class="weui-btn weui-btn_default close-popup">不，我再看看</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="selcet_sku" class='weui-popup__container popup-bottom' style="z-index:600;">
+  <div class="weui-popup__overlay" style="opacity:1;"></div>
+
+</div>
+
+<script src="lib/jquery-2.1.4.js"></script> 
+<script src="lib/fastclick.js"></script> 
+<script>
+  $(function() {
+    FastClick.attach(document.body);
+  });
+</script> 
+<script src="js/jquery-weui.js"></script>
+<script src="js/swiper.js"></script>
+<script>
+    $(function(){
+
+
+    });
+</script>
+<script>
+$(function(){
+	$(".promotion-sku li").click(function(){
+		$(this).addClass("active").siblings("li").removeClass("active");
+		})
+	})
+</script>
+<script>
+      $(document).on("click", "#show-toast", function() {
+        $.toast("收藏成功", function() {
+          console.log('close');
+        });
+      })
+</script>
+<script>
+      $(document).on("open", ".weui-popup-modal", function() {
+        console.log("open popup");
+      }).on("close", ".weui-popup-modal", function() {
+        console.log("close popup");
+      });
+      $(function() {
+          var vID=geturlpara("id");
+          var vget={goodsID:vID};
+          getGoodList(vget);
+          $("#btnbuy").click(function () {
+              window.location.href="order_info.html?id="+vID;
+          });
+      });
+      function geturlpara(paraName) {
+          var url = document.location.toString();
+          var arrObj = url.split("?");
+
+          if (arrObj.length > 1) {
+              var arrPara = arrObj[1].split("&");
+              var arr;
+
+              for (var i = 0; i < arrPara.length; i++) {
+                  arr = arrPara[i].split("=");
+
+                  if (arr != null && arr[0] == paraName) {
+                      return arr[1];
+                  }
+              }
+              return "";
+          }
+          else {
+              return "";
+          }
+      }
+      function getprice(data) {
+          var vyuan=data/100;
+          var vjue=data%100;
+          return parseInt(vyuan)+'.'+vjue;
+      };
+      function getGoodList(vget)
+      {
+          $.ajax({
+              type: 'POST'
+              , url: '/goods/getGoods'
+              , data: JSON.stringify(vget)
+              , dataType: 'json'
+              , contentType: "application/json"
+              , success: function (res) {
+
+                  var vUI = $("#goodimg");
+                  vUI.html("");
+                  for (var i = 0; i < res.count; i++) {
+                      var vgid = res.data[i].goodsid;
+                      var vImg = res.data[i].goodsimgurl;
+                      var vType = res.data[i].buytype;
+                      var vImgTemp = "";
+                      if (vImg != null && vImg != "") {
+                          var vImglist = vImg.split("</p>");
+                          var vinfo="";
+                          for (var m = 0; m < vImglist.length; m++) {
+                              if (vImglist[m] != "" && vImglist[m].indexOf("im") > -1) {
+                                  vImgTemp = vImglist[m];
+                                  vImgTemp = vImgTemp.replace("<p>", "");
+                                  vImgTemp = vImgTemp.replace("/imgupload", "../../../imgupload");
+
+                                  vinfo= vinfo + "<div class='swiper-slide'>" + vImgTemp + "</div> ";
+
+                              }
+                          }
+
+                          vinfo = $(vinfo);
+                          vinfo.appendTo(vUI);
+                      }
+                      var vTypeInfo =comjs.buytype(vType);
+
+                      var devprop=comjs.devprop(res.data[i].goodsprop)
+                      var vName = res.data[i].goodsname;
+                      var vPrice = comjs.price(res.data[i].buyprice);
+
+                      $("#detail").html(res.data[i].goodintro);
+                      $("#goodname").html(vName+'--'+vTypeInfo+'--'+devprop);
+                      $("#goodprice").html(vPrice);
+                      $(".swiper-zhutu").swiper({
+                          loop: true,
+                          paginationType:'fraction',
+                          autoplay:5000
+                      });
+                  }
+              }
+          });
+      }
+    </script>
+<script>
+$(function (){initTopHoverTree("tophov"+"ertree",30,10,10); })
+</script>
+<script>
+function initTopHoverTree(hvtid, times, right, bottom) {
+$("#" + hvtid).css("right", right).css("bottmo", bottom);
+$("#" + hvtid).on("click", function () { goTopHovetree(times); })
+$(window).scroll(function () {
+if ($(window).scrollTop() > 268) {
+$("#" + hvtid).fadeIn(100);
+}
+else {
+$("#" + hvtid).fadeOut(100);
+}
+});
+}
+//返回顶部动画
+//goTop(500);//500ms内滚回顶部
+function goTopHovetree(times) {
+if (!!!times) {
+$(window).scrollTop(0);
+return;
+}
+var sh = $('body').scrollTop();//移动总距离
+var inter = 13.333;//ms,每次移动间隔时间
+var forCount = Math.ceil(times / inter);//移动次数
+var stepL = Math.ceil(sh / forCount);//移动步长
+var timeId = null;
+function aniHovertree() {
+!!timeId && clearTimeout(timeId);
+timeId = null;
+//console.log($('body').scrollTop());
+if ($('body').scrollTop() <= 0 || forCount <= 0) {//移动端判断次数好些，因为移动端的scroll事件触发不频繁，有可能检测不到有<=0的情况
+    $('body').scrollTop(0);
+    return;
+}
+forCount--;
+sh -= stepL;
+$('body').scrollTop(sh);
+timeId = setTimeout(function () { aniHovertree(); }, inter);
+}
+aniHovertree();
+}
+</script>
+</body>
+</html>
